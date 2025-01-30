@@ -1,0 +1,289 @@
+[gd_scene load_steps=12 format=4 uid="uid://dd15sdagi3yeb"]
+
+[ext_resource type="PackedScene" uid="uid://phuekkypyokb" path="res://Scenes/square.tscn" id="1_thsku"]
+[ext_resource type="Script" path="res://Scripts/square_template.gd" id="2_7qxm6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oef75"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5oohn"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_ci1xg"]
+sky_material = SubResource("ProceduralSkyMaterial_5oohn")
+
+[sub_resource type="Environment" id="Environment_4ywod"]
+background_mode = 2
+sky = SubResource("Sky_ci1xg")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jorlo"]
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 0.0
+rim = 0.0
+rim_tint = 0.0
+clearcoat_enabled = true
+backlight = Color(0.835718, 3.22476e-06, 7.70092e-07, 1)
+refraction_scale = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_ap60k"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqwyf"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tkgyx"]
+_surfaces = [{
+"aabb": AABB(-0.528867, -0.528867, -0.528867, 1.05773, 1.05773, 1.05773),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("3GMHv9xjBz/cYwc/3GMHP9xjBz/cYwe/3GMHP9xjBz/cYwc/3GMHv9xjBz/cYwe/3GMHv9xjB7/cYwc/3GMHP9xjB7/cYwe/3GMHP9xjB7/cYwc/3GMHv9xjB7/cYwe/3GMHP9xjBz/cYwc/3GMHv9xjBz/cYwe/3GMHP9xjBz/cYwe/3GMHv9xjBz/cYwc/3GMHP9xjB7/cYwc/3GMHv9xjB7/cYwe/3GMHP9xjB7/cYwe/3GMHv9xjB7/cYwc/3GMHP9xjBz/cYwc/3GMHv9xjB7/cYwc/3GMHv9xjBz/cYwc/3GMHP9xjB7/cYwc/3GMHP9xjBz/cYwe/3GMHv9xjB7/cYwe/3GMHv9xjBz/cYwe/3GMHP9xjB7/cYwe//3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a6eoa"]
+
+[node name="Main" type="Node"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017334, 0, 0)
+material_override = SubResource("StandardMaterial3D_oef75")
+size = Vector3(200, 0.001, 200)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4ywod")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, 0.298836, -0.640856, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640856, -5, 5, 5)
+
+[node name="LayerOne" type="Node" parent="."]
+
+[node name="Square0" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="Square1" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -2)
+
+[node name="Square2" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="Square3" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -2)
+
+[node name="Square4" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -1)
+
+[node name="Square5" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+
+[node name="Square6" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="Square7" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+
+[node name="Square8" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="Square9" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="Square10" parent="LayerOne" instance=ExtResource("1_thsku")]
+
+[node name="Square11" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="Square12" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 1)
+
+[node name="Square14" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="Square13" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+
+[node name="Square15" parent="LayerOne" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="LayerTwo" type="Node" parent="."]
+
+[node name="Square0" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -2)
+
+[node name="Square1" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -2)
+
+[node name="Square2" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+
+[node name="Square3" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -2)
+
+[node name="Square4" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -1)
+
+[node name="Square5" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -1)
+
+[node name="Square6" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+
+[node name="Square7" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+
+[node name="Square8" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 0)
+
+[node name="Square9" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0)
+
+[node name="Square10" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Square11" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
+
+[node name="Square12" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 1)
+
+[node name="Square14" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1)
+
+[node name="Square13" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 1)
+
+[node name="Square15" parent="LayerTwo" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1)
+
+[node name="LayerThree" type="Node" parent="."]
+
+[node name="Square0" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -2)
+
+[node name="Square1" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, -2)
+
+[node name="Square2" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -2)
+
+[node name="Square3" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, -2)
+
+[node name="Square4" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -1)
+
+[node name="Square5" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, -1)
+
+[node name="Square6" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1)
+
+[node name="Square7" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, -1)
+
+[node name="Square8" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 0)
+
+[node name="Square9" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 0)
+
+[node name="Square10" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Square11" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 0)
+
+[node name="Square12" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 1)
+
+[node name="Square14" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1)
+
+[node name="Square13" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2, 1)
+
+[node name="Square15" parent="LayerThree" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 1)
+
+[node name="LayerFour" type="Node" parent="."]
+
+[node name="Square0" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -2)
+
+[node name="Square1" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3, -2)
+
+[node name="Square2" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -2)
+
+[node name="Square3" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, -2)
+
+[node name="Square4" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -1)
+
+[node name="Square5" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3, -1)
+
+[node name="Square6" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -1)
+
+[node name="Square7" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, -1)
+
+[node name="Square8" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, 0)
+
+[node name="Square9" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3, 0)
+
+[node name="Square10" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+
+[node name="Square11" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, 0)
+
+[node name="Square12" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, 1)
+
+[node name="Square14" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 1)
+
+[node name="Square13" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3, 1)
+
+[node name="Square15" parent="LayerFour" instance=ExtResource("1_thsku")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, 1)
+
+[node name="Square16" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+script = ExtResource("2_7qxm6")
+highlight_color = Color(0.0701452, 0.307947, 1, 1)
+color = Color(1, 1, 1, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Square16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+material_override = SubResource("StandardMaterial3D_jorlo")
+mesh = SubResource("BoxMesh_ap60k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Square16/MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_qqwyf")
+mesh = SubResource("ArrayMesh_tkgyx")
+
+[node name="Area3D" type="Area3D" parent="Square16/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Square16/MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_a6eoa")
+
+[connection signal="input_event" from="Square16/MeshInstance3D/Area3D" to="Square16" method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Square16/MeshInstance3D/Area3D" to="Square16" method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Square16/MeshInstance3D/Area3D" to="Square16" method="_on_area_3d_mouse_exited"]
