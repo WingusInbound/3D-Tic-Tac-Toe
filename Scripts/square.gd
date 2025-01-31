@@ -1,6 +1,7 @@
 extends Node3D
 
 @onready var mesh: MeshInstance3D = $MeshInstance3D
+@onready var mesh_material: StandardMaterial3D = preload("res://Assets/square_material_override.tres")
 
 @export var highlight_color: Color
 @export var color: Color
@@ -18,6 +19,7 @@ func _process(delta: float) -> void:
 
 
 func _on_area_3d_mouse_entered() -> void:
+	mesh.material_override = mesh_material
 	mesh.material_override.albedo_color = highlight_color
 
 
@@ -25,11 +27,12 @@ func _on_area_3d_mouse_exited() -> void:
 	if selected:
 		return
 	else:
-		mesh.material_override.albedo_color = color
+		mesh.material_override = null
 
 
 func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Vector3, normal: Vector3, shape_idx: int) -> void:
 	if event.is_action_pressed("left_click"):
 		print("Left Clicked")
+		mesh.material_override = mesh_material
 		mesh.material_override.albedo_color = highlight_color
 		selected = true

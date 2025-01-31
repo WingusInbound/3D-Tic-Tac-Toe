@@ -1,17 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://phuekkypyokb"]
+[gd_scene load_steps=6 format=4 uid="uid://phuekkypyokb"]
 
-[ext_resource type="Script" path="res://Scripts/square_template.gd" id="1_a52pp"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fq5se"]
-emission = Color(1, 0, 0, 1)
-emission_energy_multiplier = 0.0
-rim = 0.0
-rim_tint = 0.0
-clearcoat_enabled = true
-backlight = Color(0.835718, 3.22476e-06, 7.70092e-07, 1)
-refraction_scale = 1.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_em6nd"]
+[ext_resource type="Script" path="res://Scripts/square.gd" id="1_a52pp"]
+[ext_resource type="BoxMesh" uid="uid://b4i2cd8xiila3" path="res://Assets/square.tres" id="2_fq6ps"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqwyf"]
 albedo_color = Color(0, 0, 0, 1)
@@ -38,8 +28,7 @@ color = Color(1, 1, 1, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
-material_override = SubResource("StandardMaterial3D_fq5se")
-mesh = SubResource("BoxMesh_em6nd")
+mesh = ExtResource("2_fq6ps")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
 material_override = SubResource("StandardMaterial3D_qqwyf")
