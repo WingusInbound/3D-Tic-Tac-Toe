@@ -5,6 +5,7 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqwyf"]
 albedo_color = Color(0, 0, 0, 1)
+emission_energy_multiplier = 16.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_tkgyx"]
 _surfaces = [{
