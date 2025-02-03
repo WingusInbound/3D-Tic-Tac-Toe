@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=4 uid="uid://phuekkypyokb"]
+[gd_scene load_steps=10 format=4 uid="uid://phuekkypyokb"]
 
 [ext_resource type="Script" path="res://Scripts/square.gd" id="1_a52pp"]
 [ext_resource type="BoxMesh" uid="uid://b4i2cd8xiila3" path="res://Assets/square.tres" id="2_fq6ps"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqwyf"]
 albedo_color = Color(0, 0, 0, 1)
+emission_energy_multiplier = 16.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_tkgyx"]
 _surfaces = [{
@@ -21,10 +22,62 @@ _surfaces = [{
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a6eoa"]
 
+[sub_resource type="Animation" id="Animation_3w0hv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vpxc6"]
+resource_name = "shrink"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.2, 0.2, 0.2)]
+}
+
+[sub_resource type="Animation" id="Animation_a8emx"]
+resource_name = "shrink_player"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.4, 0.4, 0.4)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f8cft"]
+_data = {
+"RESET": SubResource("Animation_3w0hv"),
+"shrink": SubResource("Animation_vpxc6"),
+"shrink_player": SubResource("Animation_a8emx")
+}
+
 [node name="Square" type="Node3D"]
 script = ExtResource("1_a52pp")
-highlight_color = Color(0, 0, 1, 1)
-color = Color(1, 1, 1, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
@@ -38,6 +91,11 @@ mesh = SubResource("ArrayMesh_tkgyx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
 shape = SubResource("BoxShape3D_a6eoa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f8cft")
+}
 
 [connection signal="input_event" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_input_event"]
 [connection signal="mouse_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_mouse_entered"]
