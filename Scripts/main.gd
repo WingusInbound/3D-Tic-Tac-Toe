@@ -12,7 +12,6 @@ var winner
 var cube_size: int
 var half_size: int
 
-
 # On Ready
 @onready var layer_one = $LayerOne
 @onready var layer_two = $LayerTwo
