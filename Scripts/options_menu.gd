@@ -14,6 +14,6 @@ func _on_cube_size_minus_button_pressed() -> void:
 
 
 func _on_cube_size_plus_button_pressed() -> void:
-	if GlobalVars.cube_size < 8:
+	if GlobalVars.cube_size < 10:
 		GlobalVars.cube_size += 2
 		cube_size_display_label.text = str(GlobalVars.cube_size)
