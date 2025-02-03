@@ -13,6 +13,7 @@ var current_turn: int
 var players: Array
 var winner
 
+# On Ready
 @onready var layer_one = $LayerOne
 @onready var layer_two = $LayerTwo
 @onready var layer_three = $LayerThree
@@ -21,7 +22,6 @@ var winner
 @onready var layers = [layer_one, layer_two, layer_three, layer_four]
 @onready var win_check: Node3D = $WinCheck
 @onready var ui: UI = $UI_Canvas
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
