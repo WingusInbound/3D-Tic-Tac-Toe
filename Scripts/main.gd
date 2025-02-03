@@ -133,15 +133,11 @@ func set_camera() -> void:
 	var camera_anim: Animation = camera_anim_player.get_animation("play_game")
 	camera_anim.track_insert_key(0,0,camera.position)
 	camera_anim.track_insert_key(0,2,Vector3(half_size-cube_size,cube_size+2,cube_size+3))
-	print(cube_size)
 	if cube_size == 4:
-		print("cube_size = 4")
 		camera_anim.track_insert_key(0,4,Vector3(-(half_size+0.5),cube_size+half_size,0))
 	elif cube_size == 6:
-		print("cube_size = 6")
 		camera_anim.track_insert_key(0,4,Vector3(-(half_size+0.5),cube_size*2,0))
 	else:
-		print("cube_size = 8")
 		camera_anim.track_insert_key(0,4,Vector3(-(half_size+0.5),cube_size*2.5,0))
 	# Duplicate play_game for game_win animation
 	var camera_anim_game_win = camera_anim.duplicate()
