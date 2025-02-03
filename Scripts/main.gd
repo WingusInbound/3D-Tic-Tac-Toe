@@ -29,7 +29,7 @@ var half_size: int
 @onready var camera: Camera3D = $Camera3D
 @onready var spotlight: SpotLight3D = $SpotLight3D
 
-# Changes
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var _connections = Messenger.SELECTED.connect(_on_tile_selected)
