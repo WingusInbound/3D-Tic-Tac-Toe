@@ -14,7 +14,7 @@ var main: Node3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if is_inside_tree():
-		main = get_owner()
+		main = get_node("/root/Main")
 	pass # Replace with function body.
 
 

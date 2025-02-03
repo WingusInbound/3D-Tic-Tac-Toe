@@ -12,19 +12,18 @@ var square_map = {}
 var current_turn: int
 var players: Array
 var winner
-var cube_size: int = GlobalVars.cube_size
-var half_size: int = GlobalVars.cube_size/2
+var cube_size: int
+var half_size: int
 
 # On Ready
-#@onready var layer_one = $LayerOne
-#@onready var layer_two = $LayerTwo
-#@onready var layer_three = $LayerThree
-#@onready var layer_four = $LayerFour
-#@onready var layers = [layer_one, layer_two, layer_three, layer_four]
-#@onready var cube_anim_player = $AnimationPlayer
+@onready var layer_one = $LayerOne
+@onready var layer_two = $LayerTwo
+@onready var layer_three = $LayerThree
+@onready var layer_four = $LayerFour
+@onready var layers = [layer_one, layer_two, layer_three, layer_four]
 @onready var win_check: Node3D = $WinCheck
 @onready var ui: UI = $UI_Canvas
-@onready var square = preload("res://Assets/square.tres")
+@onready var square = preload("res://Scenes/square.tscn")
 @onready var cube_anim_player: AnimationPlayer = $CubeAnimationPlayer
 @onready var camera_anim_player: AnimationPlayer = $CameraAnimationPlayer
 @onready var camera: Camera3D = $Camera3D
@@ -41,6 +40,7 @@ func _ready() -> void:
 	player_two.color = preload("res://Assets/player_two_square.tres")
 	player_two.value = -1
 	players = [player_one, player_two]
+	set_spotlight()
 	ui.main_menu()
 
 # Runs every physics frame
@@ -51,15 +51,21 @@ func _process(_delta) -> void:
 		
 # Called during Ready, chooses and sets starting player
 func start_game():
+	for i in layers:
+		i.visible = false
 	current_turn = randi_range(0, 1)
 	current_player = players[current_turn]
 	cube_anim_player.play("play_game")
 	camera_anim_player.play("play_game")
+	cube_size = GlobalVars.cube_size
+	half_size = GlobalVars.cube_size/2
+	set_cube()
+	set_camera()
 	
 
 # Called during Ready, updates spotlight location
 func set_spotlight() -> void:
-	spotlight.postion = Vector3(half_size,50,half_size)
+	spotlight.position = Vector3(0,50,0)
 
 
 # Called during Ready, creates the Node for the cube, each layer, and the squares.
@@ -79,7 +85,7 @@ func set_cube() -> void:
 		for x in range(cube_size):
 			# For each dimension, z
 			for z in range(cube_size):
-				var temp_square: Node3D = square.instantiate()
+				var temp_square = square.instantiate()
 				temp_square.name = "Square" + str(x*cube_size+z) # Names square node
 				layer_node.add_child(temp_square)
 				#var square_node: Node3D = get_node("/root/Main/Cube/" + layer_node.name + "/" + temp_square.name)
@@ -100,10 +106,12 @@ func set_layer_animation_track(y: int, node: Node3D) -> void:
 	cube_anim.track_insert_key(y, 0, node.position)
 	if y < half_size:
 		# Negative X Position
+		cube_anim.track_insert_key(y,2,Vector3(-(abs(y-half_size)*cube_size+abs(y-half_size)),0,0))
 		cube_anim.track_insert_key(y,4,Vector3(-(abs(y-half_size)*cube_size+abs(y-half_size)),-y,0))
 	else:
 		# Positive X Position
-		cube_anim.track_insert_key(y,4,Vector3((abs(y-half_size)*cube_size+abs(y-cube_size)),-y,0))
+		cube_anim.track_insert_key(y,2,Vector3((abs(y-half_size)*cube_size+abs(y-half_size)),0,0))
+		cube_anim.track_insert_key(y,4,Vector3((abs(y-half_size)*cube_size+abs(y-half_size)),-y,0))
 
 
 # Called in set_cube, sets cube animation tracks for rotation and game_win
@@ -122,12 +130,21 @@ func set_cube_animation_tracks() -> void:
 
 # Called in Ready, set camera starting position and animations
 func set_camera() -> void:
-	camera.postion = Vector3(-9,cube_size+2,cube_size+3) # Set starting location for camera
+	camera.position = Vector3(-(cube_size+2),cube_size+2,cube_size+2) # Set starting location for camera
 	# Set animation track for play_game
 	var camera_anim: Animation = camera_anim_player.get_animation("play_game")
-	camera_anim.track_insert_key(0,0,camera.postion)
+	camera_anim.track_insert_key(0,0,camera.position)
 	camera_anim.track_insert_key(0,2,Vector3(half_size-cube_size,cube_size+2,cube_size+3))
-	camera_anim.track_insert_key(0,4,Vector3(half_size-cube_size,cube_size*2,half_size))
+	print(cube_size)
+	if cube_size == 4:
+		print("cube_size = 4")
+		camera_anim.track_insert_key(0,4,Vector3(-(half_size+0.5),cube_size+half_size,0))
+	elif cube_size == 6:
+		print("cube_size = 6")
+		camera_anim.track_insert_key(0,4,Vector3(-(half_size+0.5),cube_size*2,0))
+	else:
+		print("cube_size = 8")
+		camera_anim.track_insert_key(0,4,Vector3(-(half_size+0.5),cube_size*2.5,0))
 	# Duplicate play_game for game_win animation
 	var camera_anim_game_win = camera_anim.duplicate()
 	var library: AnimationLibrary = camera_anim_player.get_animation_library("")
