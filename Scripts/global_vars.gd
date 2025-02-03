@@ -9,4 +9,3 @@ var player_one_color: Color = Color(255,0,0)
 var player_two_color: Color = Color(0,0,255)
 
 var ai_toggle: bool = false
-
