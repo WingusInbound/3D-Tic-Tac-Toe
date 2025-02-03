@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://dd15sdagi3yeb"]
+[gd_scene load_steps=17 format=3 uid="uid://dd15sdagi3yeb"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_nxcne"]
 [ext_resource type="PackedScene" uid="uid://2qa7nlw51tan" path="res://Scenes/ui.tscn" id="2_v4d1a"]
 [ext_resource type="PackedScene" uid="uid://phuekkypyokb" path="res://Scenes/square.tscn" id="3_edg6o"]
 [ext_resource type="Script" path="res://Scripts/win_check.gd" id="4_vb1hq"]
+[ext_resource type="Script" path="res://Scripts/ai.gd" id="5_dmki4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oef75"]
 albedo_color = Color(0, 0, 0, 1)
@@ -377,6 +378,9 @@ libraries = {
 script = ExtResource("4_vb1hq")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Ai" type="Node" parent="."]
+script = ExtResource("5_dmki4")
 
 [connection signal="animation_finished" from="CameraAnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="finished" from="AudioStreamPlayer" to="UI_Canvas" method="_on_audio_stream_player_finished"]

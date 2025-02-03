@@ -26,6 +26,7 @@ var half_size: int
 @onready var camera: Camera3D = $Camera3D
 @onready var spotlight: SpotLight3D = $SpotLight3D
 @onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var ai_player: Node = $Ai
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
