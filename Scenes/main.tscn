@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dd15sdagi3yeb"]
+[gd_scene load_steps=16 format=3 uid="uid://dd15sdagi3yeb"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_nxcne"]
 [ext_resource type="PackedScene" uid="uid://2qa7nlw51tan" path="res://Scenes/ui.tscn" id="2_v4d1a"]
@@ -54,6 +54,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(-0.436332, -0.785398, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:fov")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [100.0]
+}
 
 [sub_resource type="Animation" id="Animation_ydefg"]
 resource_name = "play_game"
@@ -84,10 +96,27 @@ tracks/1/keys = {
 "values": [Vector3(-0.436332, -0.785398, 0), Vector3(-0.436332, 0, 0), Vector3(-1.5708, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_5nuce"]
+resource_name = "rotate"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [100.0, 50.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r8lxa"]
 _data = {
 "RESET": SubResource("Animation_am3os"),
-"play_game": SubResource("Animation_ydefg")
+"play_game": SubResource("Animation_ydefg"),
+"rotate": SubResource("Animation_5nuce")
 }
 
 [sub_resource type="Animation" id="Animation_mbplr"]
@@ -135,7 +164,7 @@ environment = SubResource("Environment_4ywod")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, 0.298836, -0.640856, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640856, -5, 5, 5)
 current = true
-fov = 97.0416
+fov = 100.0
 
 [node name="LayerOne" type="Node3D" parent="."]
 

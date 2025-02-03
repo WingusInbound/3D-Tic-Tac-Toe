@@ -88,8 +88,6 @@ func set_cube() -> void:
 				var temp_square = square.instantiate()
 				temp_square.name = "Square" + str(x*cube_size+z) # Names square node
 				layer_node.add_child(temp_square)
-				#var square_node: Node3D = get_node("/root/Main/Cube/" + layer_node.name + "/" + temp_square.name)
-				#square_node.global_position = Vector3(x-(GlobalVars.cube_size/2),y,z-(GlobalVars.cube_size/2))
 				temp_square.global_position = Vector3(x-half_size,y,z-half_size)
 				var temp_key = get_string_coords(temp_square.position)
 				square_map.get_or_add(temp_key,temp_square.value)
@@ -194,6 +192,7 @@ func show_win():
 				else:
 					child.anim_player.play("shrink_player")
 	cube_anim_player.play("rotate")
+	camera_anim_player.play("rotate")
 	game_state = GlobalVars.GameState.DONE
 	ui.game_over()
 
