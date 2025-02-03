@@ -141,7 +141,7 @@ script = ExtResource("1_nxcne")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)
-light_energy = 5.673
+light_energy = 10.0
 light_size = 1.0
 light_specular = 9.023
 spot_range = 100.0
@@ -379,3 +379,4 @@ script = ExtResource("4_vb1hq")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="animation_finished" from="CameraAnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="finished" from="AudioStreamPlayer" to="UI_Canvas" method="_on_audio_stream_player_finished"]
