@@ -90,13 +90,12 @@ func turn(key):
 
 
 func show_win():
-	#print(winner)
+	var cube_node: Node3D = get_node("/root/Main/Cube")
+	var layers = cube_node.get_children()
 	for i in layers:
 		var children = i.get_children()
 		for child in children:
-			#print(child.position)
 			var temp_key = get_string_coords(child.position)
-			#print(temp_key)
 			if str(temp_key) in winner:
 				continue
 			else:
@@ -104,7 +103,7 @@ func show_win():
 					child.anim_player.play("shrink")
 				else:
 					child.anim_player.play("shrink_player")
-	anim_player.play("rotate")
+	cube_anim_player.play("rotate")
 	game_state = GlobalVars.GameState.DONE
 	ui.game_over()
 
