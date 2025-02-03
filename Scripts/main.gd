@@ -28,6 +28,11 @@ var half_size: int
 @onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var ai_player: Node = $Ai
 
+# Game Manager
+func game_manager():
+	pass
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var _connections = Messenger.SELECTED.connect(_on_tile_selected)
