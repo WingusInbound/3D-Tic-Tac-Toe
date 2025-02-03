@@ -114,6 +114,7 @@ func show_win():
 	game_state = GlobalVars.GameState.DONE
 	ui.game_over()
 
+
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "game_win":
 		show_win()

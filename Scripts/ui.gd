@@ -2,7 +2,6 @@ class_name UI
 extends CanvasLayer
 
 # Public
-var score: int = 0
 
 # Private
 var paused: bool = false
