@@ -1,8 +1,5 @@
 extends Node3D
 
-#@export var player_color: Color
-#@export var ai_color: Color
-
 # Public
 var game_state: int = GlobalVars.GameState.START
 var current_player: Player
