@@ -45,10 +45,10 @@ func _ready() -> void:
 
 # Runs every physics frame
 func _process(_delta) -> void:
-	if Input.is_action_just_pressed("pause") and game_state == GlobalVars.GameState.PLAY:
+	if Input.is_action_just_pressed("pause") and game_state == GlobalVars.GameState.PLAYER_TURN:
 		ui.toggle_pause()
-		
-		
+
+
 # Called during Ready, chooses and sets starting player
 func start_game():
 	for i in layers:
@@ -61,7 +61,7 @@ func start_game():
 	half_size = GlobalVars.cube_size/2
 	set_cube()
 	set_camera()
-	
+
 
 # Called during Ready, updates spotlight location
 func set_spotlight() -> void:
@@ -94,7 +94,7 @@ func set_cube() -> void:
 		# Set Animation Track for each layer
 		set_layer_animation_track(y, layer_node)
 	set_cube_animation_tracks()
-	
+
 
 # Called in set_cube, sets layer Animation Track
 func set_layer_animation_track(y: int, node: Node3D) -> void:
@@ -114,7 +114,7 @@ func set_layer_animation_track(y: int, node: Node3D) -> void:
 
 # Called in set_cube, sets cube animation tracks for rotation and game_win
 func set_cube_animation_tracks() -> void:
-	var cube_anim: Animation = cube_anim_player.get_animation("play_game") 
+	var cube_anim: Animation = cube_anim_player.get_animation("play_game")
 	var cube_anim_game_win = cube_anim.duplicate()
 	var cube_library: AnimationLibrary = cube_anim_player.get_animation_library("")
 	cube_library.add_animation("game_win", cube_anim_game_win)
@@ -148,7 +148,7 @@ func set_camera() -> void:
 # Triggered when a box is clicked
 # Collects data from selected box and calls for applicable changes
 func _on_tile_selected(square):
-	if game_state != GlobalVars.GameState.PLAY:
+	if game_state != GlobalVars.GameState.PLAYER_TURN:
 		return
 	var key = get_string_coords(square.position)
 	var move = {key: square.value}
@@ -159,6 +159,8 @@ func _on_tile_selected(square):
 # Determines if the selected box results in a win
 # Otherwise, toggle current player
 func turn(key):
+
+
 	winner = win_check.validate(key)
 	if winner:
 		game_state = GlobalVars.GameState.ENDING
@@ -200,13 +202,13 @@ func get_string_coords(coords: Vector3) -> String:
 	temp_string += str(coords.y)
 	temp_string += str(coords.z + half_size)
 	return temp_string
-	
+
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "game_win":
 		show_win()
 	elif anim_name == "play_game":
-		game_state = GlobalVars.GameState.PLAY
+		game_state = GlobalVars.GameState.PLAYER_TURN
 
 
 class Player:
