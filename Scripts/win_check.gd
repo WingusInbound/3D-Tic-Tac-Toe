@@ -1,7 +1,7 @@
 """
 WinCheck
 Call validate(selected) where selected is a 3 digit coordinate as a string (eg 231)
-Returns a list of such strings if main.square_map shows those 4 boxes have values that sum to abs(CUBE_SIZE)
+Returns a list of such strings if main.square_map shows those 4 boxes have values that sum to abs(cube_size)
 """
 
 extends Node3D
@@ -43,7 +43,7 @@ func get_potential_wins(key):
 		diag_type = get_diag_type(dimension, key)
 
 		# Iterates through each possible postional value
-		for i in range(0,GlobalVars.CUBE_SIZE):
+		for i in range(0,GlobalVars.cube_size):
 			cardinal_assembly = ""
 			diagonal_assembly = ""
 
@@ -71,7 +71,7 @@ func get_potential_wins(key):
 							diag_toggle += 1
 						# Second digit set to max value - i
 						else:
-							diagonal_assembly += str((GlobalVars.CUBE_SIZE - 1) - i)
+							diagonal_assembly += str((GlobalVars.cube_size - 1) - i)
 							diag_toggle -= 1
 
 			# Add cords to rows
@@ -101,7 +101,7 @@ func get_diag_type(dimension, key):
 			local_cords += key[cord_pos]
 	if int(local_cords[0]) == int(local_cords[1]):
 		return 1 # Forward diag
-	elif int(local_cords[0]) + int(local_cords[1]) == GlobalVars.CUBE_SIZE - 1:
+	elif int(local_cords[0]) + int(local_cords[1]) == GlobalVars.cube_size - 1:
 		return 2 # Back diag
 	else:
 		return 0 # No diag on current plane
@@ -134,7 +134,7 @@ func get_cross_diagonal_wins(key):
 
 	# If all numbers the same (no diff), cross is 000, 111, 222, 333
 	if diff == "":
-		for i in range(0, GlobalVars.CUBE_SIZE):
+		for i in range(0, GlobalVars.cube_size):
 			cross_assembly = ""
 			for j in range (0,3):
 				cross_assembly += str(i)
@@ -142,14 +142,14 @@ func get_cross_diagonal_wins(key):
 
 	# Else, the differing position is incremented while the others are decremented
 	# Eg 330, 221, 112, 003
-	elif int(diff) == GlobalVars.CUBE_SIZE - 1 - int(shared):
-		for i in range(0, GlobalVars.CUBE_SIZE):
+	elif int(diff) == GlobalVars.cube_size - 1 - int(shared):
+		for i in range(0, GlobalVars.cube_size):
 			cross_assembly = ""
 			for cord_pos in range(0,3):
 				if cord_pos == diff_pos:
 					cross_assembly += str(i)
 				else:
-					cross_assembly += str(GlobalVars.CUBE_SIZE - 1 - i)
+					cross_assembly += str(GlobalVars.cube_size - 1 - i)
 			cross_list.append(cross_assembly)
 
 	# If cross list not empty, add to possible wins
@@ -169,6 +169,6 @@ func check_wins():
 			if cord in ["diag1", "diag2", "card", "cross"]:
 				continue
 			counter += main.square_map[cord]
-		if abs(counter) == GlobalVars.CUBE_SIZE:
+		if abs(counter) == GlobalVars.cube_size:
 			#print("WIN")
 			return row
