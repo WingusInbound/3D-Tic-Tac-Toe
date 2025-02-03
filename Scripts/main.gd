@@ -29,7 +29,6 @@ var half_size: int
 @onready var camera: Camera3D = $Camera3D
 @onready var spotlight: SpotLight3D = $SpotLight3D
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var _connections = Messenger.SELECTED.connect(_on_tile_selected)
@@ -42,6 +41,7 @@ func _ready() -> void:
 	players = [player_one, player_two]
 	set_spotlight()
 	ui.main_menu()
+
 
 # Runs every physics frame
 func _process(_delta) -> void:
