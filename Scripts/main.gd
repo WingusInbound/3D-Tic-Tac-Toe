@@ -56,15 +56,15 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("spacebar"):
 		if game_state == GlobalVars.GameState.START:
 			anim_player.play("play_game")
-			game_state = GlobalVars.GameState.PLAY
-
-		elif game_state == GlobalVars.GameState.END:
+		elif game_state == GlobalVars.GameState.DONE:
 			get_tree().reload_current_scene()
 
 
 # Triggered when a box is clicked
 # Collects data from selected box and calls for applicable changes
 func tile_selected(square):
+	if game_state != GlobalVars.GameState.PLAY:
+		return
 	var key = get_string_coords(square.position)
 	var move = {key: square.value}
 	square_map.merge(move,true)
@@ -86,6 +86,7 @@ func turn(key):
 	print("Key: ", key)
 	winner = win_check.validate(key)
 	if winner:
+		game_state = GlobalVars.GameState.ENDING
 		if current_turn == 0:
 			print("Player 1 Wins!")
 		else:
@@ -116,8 +117,10 @@ func show_win():
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "game_win":
-		game_state = GlobalVars.GameState.END
+		game_state = GlobalVars.GameState.DONE
 		show_win()
+	elif anim_name == "play_game":
+		game_state = GlobalVars.GameState.PLAY
 
 
 class Player:
