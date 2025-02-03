@@ -26,6 +26,7 @@ var winner
 @onready var camera_anim_player: AnimationPlayer = $CameraAnimationPlayer
 @onready var camera: Camera3D = $Camera3D
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var _connections = Messenger.SELECTED.connect(_on_tile_selected)
@@ -38,7 +39,12 @@ func _ready() -> void:
 	players = [player_one, player_two]
 	ui.main_menu()
 
-
+# Runs every physics frame
+func _process(_delta) -> void:
+	if Input.is_action_just_pressed("pause") and game_state == GlobalVars.GameState.PLAY:
+		ui.toggle_pause()
+		
+		
 # Called during Ready, chooses and sets starting player
 func start_game():
 	current_turn = randi_range(0, 1)
@@ -47,9 +53,9 @@ func start_game():
 	camera_anim_player.play("play_game")
 	
 
-func _process(_delta) -> void:
-	if Input.is_action_just_pressed("pause") and game_state == GlobalVars.GameState.PLAY:
-		ui.toggle_pause()
+# Called during Ready, creates the Node for the cube, each layer, and the squares.
+
+
 
 
 # Triggered when a box is clicked
@@ -61,15 +67,6 @@ func _on_tile_selected(square):
 	var move = {key: square.value}
 	square_map.merge(move,true)
 	turn(key)
-
-
-# Returns positional cordinates of a box as a 3 digit string
-func get_string_coords(coords: Vector3) -> String:
-	var temp_string: String = ""
-	temp_string += str(coords.x + GlobalVars.cube_size/2)
-	temp_string += str(coords.y)
-	temp_string += str(coords.z + GlobalVars.cube_size/2)
-	return temp_string
 
 
 # Determines if the selected box results in a win
@@ -107,6 +104,15 @@ func show_win():
 	game_state = GlobalVars.GameState.DONE
 	ui.game_over()
 
+
+# Returns positional cordinates of a box as a 3 digit string
+func get_string_coords(coords: Vector3) -> String:
+	var temp_string: String = ""
+	temp_string += str(coords.x + GlobalVars.cube_size/2)
+	temp_string += str(coords.y)
+	temp_string += str(coords.z + GlobalVars.cube_size/2)
+	return temp_string
+	
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "game_win":
