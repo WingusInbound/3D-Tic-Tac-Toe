@@ -1,7 +1,14 @@
 extends Node
 
 enum {PLAYER_ONE, PLAYER_TWO}
-enum GameState {START, PLAYER_TURN, AI_TURN, ENDING, DONE}
+enum GameState {START, # Used while the game is launching, before reaching main menu
+				MAIN_MENU, # Used while the player is navigating the main menu or options
+				SETUP, # Used after the player has started the game, before the game is ready to accept input
+				PLAYER_TURN, # Used during the turn of any human player
+				AI_TURN, # Used during the turn of the AI player, if it is enabled
+				ENDING, # Used after a win is detected, to allow time for animation
+				DONE, # Used after the final animation has completed
+				}
 
 var cube_size: int = 4
 

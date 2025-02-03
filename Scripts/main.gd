@@ -28,13 +28,12 @@ var half_size: int
 @onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var ai_player: Node = $Ai
 
-# Game Manager
-func game_manager():
-	pass
+
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+
 	var _connections = Messenger.SELECTED.connect(_on_tile_selected)
 	var player_one: Player = Player.new()
 	player_one.mesh = preload("res://Assets/player_one_square.tres")
@@ -53,6 +52,11 @@ func _ready() -> void:
 func _process(_delta) -> void:
 	if Input.is_action_just_pressed("pause") and game_state == GlobalVars.GameState.PLAYER_TURN:
 		ui.toggle_pause()
+
+
+# Game Manager
+func game_manager():
+	pass
 
 
 # Called during Ready, chooses and sets starting player
