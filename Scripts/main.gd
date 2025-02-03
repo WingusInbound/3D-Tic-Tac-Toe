@@ -159,8 +159,6 @@ func _on_tile_selected(square):
 # Determines if the selected box results in a win
 # Otherwise, toggle current player
 func turn(key):
-
-
 	winner = win_check.validate(key)
 	if winner:
 		game_state = GlobalVars.GameState.ENDING
