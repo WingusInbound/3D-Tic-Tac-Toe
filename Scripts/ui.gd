@@ -23,6 +23,7 @@ func main_menu() -> void:
 	player_one.color = GlobalVars.player_one_color
 	player_two.color = GlobalVars.player_two_color
 
+
 func toggle_pause() -> void:
 	if not paused:
 		Engine.time_scale = 0
