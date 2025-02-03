@@ -28,7 +28,7 @@ var winner
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var _connections = Messenger.SELECTED.connect(tile_selected)
+	var _connections = Messenger.SELECTED.connect(_on_tile_selected)
 	var player_one: Player = Player.new()
 	player_one.color = preload("res://Assets/player_one_square.tres")
 	player_one.value = 1
@@ -36,25 +36,16 @@ func _ready() -> void:
 	player_two.color = preload("res://Assets/player_two_square.tres")
 	player_two.value = -1
 	players = [player_one, player_two]
-	set_square_map()
 	ui.main_menu()
-
-
-# Called during Ready, sets up map of cube
-func set_square_map():
-	for i in layers:
-		var children = i.get_children()
-		for child in children:
-			var key = get_string_coords(child.position)
-			square_map.get_or_add(key, child.value)
 
 
 # Called during Ready, chooses and sets starting player
 func start_game():
 	current_turn = randi_range(0, 1)
 	current_player = players[current_turn]
-	anim_player.play("play_game")
-
+	cube_anim_player.play("play_game")
+	camera_anim_player.play("play_game")
+	
 
 func _process(_delta) -> void:
 	if Input.is_action_just_pressed("pause") and game_state == GlobalVars.GameState.PLAY:
@@ -63,7 +54,7 @@ func _process(_delta) -> void:
 
 # Triggered when a box is clicked
 # Collects data from selected box and calls for applicable changes
-func tile_selected(square):
+func _on_tile_selected(square):
 	if game_state != GlobalVars.GameState.PLAY:
 		return
 	var key = get_string_coords(square.position)
