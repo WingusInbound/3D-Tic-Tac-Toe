@@ -12,6 +12,8 @@ var square_map = {}
 var current_turn: int
 var players: Array
 var winner
+var cube_size: int = GlobalVars.cube_size
+var half_size: int = GlobalVars.cube_size/2
 
 # On Ready
 #@onready var layer_one = $LayerOne
@@ -22,9 +24,11 @@ var winner
 #@onready var cube_anim_player = $AnimationPlayer
 @onready var win_check: Node3D = $WinCheck
 @onready var ui: UI = $UI_Canvas
+@onready var square = preload("res://Assets/square.tres")
 @onready var cube_anim_player: AnimationPlayer = $CubeAnimationPlayer
 @onready var camera_anim_player: AnimationPlayer = $CameraAnimationPlayer
 @onready var camera: Camera3D = $Camera3D
+@onready var spotlight: SpotLight3D = $SpotLight3D
 
 
 # Called when the node enters the scene tree for the first time.
@@ -53,10 +57,72 @@ func start_game():
 	camera_anim_player.play("play_game")
 	
 
+# Called during Ready, updates spotlight location
+func set_spotlight() -> void:
+	spotlight.postion = Vector3(half_size,50,half_size)
+
+
 # Called during Ready, creates the Node for the cube, each layer, and the squares.
+func set_cube() -> void:
+	# Creates Cube node and adds it to the tree
+	var cube = Node3D.new()
+	cube.name = "Cube"
+	add_child(cube)
+	var cube_node: Node3D = get_node("/root/Main/Cube") # Gets Cube node
+	# For each layer, y, in cube_size
+	for y in range(cube_size):
+		var temp_layer = Node3D.new() # Create a new node
+		temp_layer.name = "Layer" + str(y) # Sets layer name
+		cube_node.add_child(temp_layer) # Adds node as child of Cube
+		var layer_node: Node3D = get_node("/root/Main/Cube/" + str(temp_layer.name)) # Get Layer node
+		# For each dimension, x
+		for x in range(cube_size):
+			# For each dimension, z
+			for z in range(cube_size):
+				var temp_square: Node3D = square.instantiate()
+				temp_square.name = "Square" + str(x*cube_size+z) # Names square node
+				layer_node.add_child(temp_square)
+				#var square_node: Node3D = get_node("/root/Main/Cube/" + layer_node.name + "/" + temp_square.name)
+				#square_node.global_position = Vector3(x-(GlobalVars.cube_size/2),y,z-(GlobalVars.cube_size/2))
+				temp_square.global_position = Vector3(x-half_size,y,z-half_size)
+				var temp_key = get_string_coords(temp_square.position)
+				square_map.get_or_add(temp_key,temp_square.value)
+		# Set Animation Track for each layer
+		set_layer_animation_track(y, layer_node)
+	set_cube_animation_tracks()
+	
+
+# Called in set_cube, sets layer Animation Track
+func set_layer_animation_track(y: int, node: Node3D) -> void:
+	var cube_anim: Animation = cube_anim_player.get_animation("play_game") # Gets animation for Cube
+	cube_anim.add_track(Animation.TYPE_POSITION_3D)
+	cube_anim.track_set_path(y, str(node.get_path()))
+	cube_anim.track_insert_key(y, 0, node.position)
+	if y < half_size:
+		# Negative X Position
+		cube_anim.track_insert_key(y,4,Vector3(-(abs(y-half_size)*cube_size+abs(y-half_size)),-y,0))
+	else:
+		# Positive X Position
+		cube_anim.track_insert_key(y,4,Vector3((abs(y-half_size)*cube_size+abs(y-cube_size)),-y,0))
 
 
+# Called in set_cube, sets cube animation tracks for rotation and game_win
+func set_cube_animation_tracks() -> void:
+	var cube_anim: Animation = cube_anim_player.get_animation("play_game") 
+	var cube_anim_game_win = cube_anim.duplicate()
+	var cube_library: AnimationLibrary = cube_anim_player.get_animation_library("")
+	cube_library.add_animation("game_win", cube_anim_game_win)
+	var cube_rotation_anim: Animation = cube_anim_player.get_animation("rotate")
+	cube_rotation_anim.add_track(2)
+	cube_rotation_anim.track_set_path(0,"/root/Main/Cube")
+	cube_rotation_anim.track_insert_key(0,0,Quaternion(Vector3(0,1,0),deg_to_rad(0)))
+	cube_rotation_anim.track_insert_key(0,2.5,Quaternion(Vector3(0,1,0),deg_to_rad(180)))
+	cube_rotation_anim.track_insert_key(0,5.0,Quaternion(Vector3(0,1,0),deg_to_rad(360)))
 
+
+# Called in Ready, set camera starting position and animations
+func set_camera(): -> void:
+	pass
 
 # Triggered when a box is clicked
 # Collects data from selected box and calls for applicable changes
