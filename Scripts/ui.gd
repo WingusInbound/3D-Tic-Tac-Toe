@@ -13,6 +13,7 @@ var paused: bool = false
 @onready var player_two: ColorPickerButton = $UI/OptionsMenu/Player2Color/ColorPickerButton
 @onready var pause_menu: VBoxContainer = $UI/PauseMenu
 @onready var end_menu: VBoxContainer = $UI/EndMenu
+@onready var audio_player: AudioStreamPlayer = get_node("/root/Main/AudioStreamPlayer")
 
 
 func main_menu() -> void:
@@ -23,6 +24,7 @@ func main_menu() -> void:
 	player_one.color = GlobalVars.player_one_color
 	player_two.color = GlobalVars.player_two_color
 	
+
 
 func toggle_pause() -> void:
 	if not paused:
@@ -39,29 +41,43 @@ func game_over() -> void:
 
 
 func _on_quit_button_pressed() -> void:
+	audio_player.stream = load("res://Assets/Sounds/Minimalist11.wav")
+	audio_player.play()
+	await audio_player.finished
 	get_tree().quit()
 
 
 func _on_start_button_pressed() -> void:
 	start_menu.visible = false
 	end_menu.visible = false
+	audio_player.stream = load("res://Assets/Sounds/Minimalist11.wav")
+	audio_player.play()
 	main.start_game()
 
 
 func _on_resume_button_pressed() -> void:
+	audio_player.stream = load("res://Assets/Sounds/Minimalist11.wav")
+	audio_player.play()
 	toggle_pause()
 
 
 func _on_restart_button_pressed() -> void:
+	audio_player.stream = load("res://Assets/Sounds/Minimalist11.wav")
+	audio_player.play()
+	await audio_player.finished
 	get_tree().reload_current_scene()
 
 
 func _on_options_pressed() -> void:
+	audio_player.stream = load("res://Assets/Sounds/Minimalist11.wav")
+	audio_player.play()
 	start_menu.visible = false
 	options_menu.visible = true
 
 
 func _on_options_resume_button_pressed() -> void:
+	audio_player.stream = load("res://Assets/Sounds/Minimalist11.wav")
+	audio_player.play()
 	GlobalVars.player_one_color = player_one.color
 	GlobalVars.player_two_color = player_two.color
 	start_menu.visible = true
