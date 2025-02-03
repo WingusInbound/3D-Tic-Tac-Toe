@@ -22,6 +22,7 @@ func main_menu() -> void:
 	end_menu.visible = false
 	player_one.color = GlobalVars.player_one_color
 	player_two.color = GlobalVars.player_two_color
+	
 
 func toggle_pause() -> void:
 	if not paused:
