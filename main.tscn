@@ -149,8 +149,8 @@ tracks/9/keys = {
 "values": [Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_ydefg"]
-resource_name = "play_game"
+[sub_resource type="Animation" id="Animation_rmkl8"]
+resource_name = "game_win"
 length = 4.0
 step = 1.0
 tracks/0/type = "value"
@@ -274,8 +274,8 @@ tracks/9/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 0, 0.0872665)]
 }
 
-[sub_resource type="Animation" id="Animation_rmkl8"]
-resource_name = "game_win"
+[sub_resource type="Animation" id="Animation_ydefg"]
+resource_name = "play_game"
 length = 4.0
 step = 1.0
 tracks/0/type = "value"
@@ -490,7 +490,6 @@ transform = Transform3D(0.707107, 0.298836, -0.640856, 0, 0.906308, 0.422618, 0.
 current = true
 
 [node name="LayerOne" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Square0" parent="LayerOne" instance=ExtResource("1_thsku")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
