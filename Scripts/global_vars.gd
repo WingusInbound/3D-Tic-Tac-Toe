@@ -10,9 +10,15 @@ enum GameState {START, # Used while the game is launching, before reaching main 
 				DONE, # Used after the final animation has completed
 				}
 
-var cube_size: int = 4
 
+# Player Configurations
+# Set in-game in Options Menu
+var cube_size: int = 4
 var player_one_color: Color = Color(1,0,0)
 var player_two_color: Color = Color(0,0,1)
-
 var ai_toggle: bool = false
+
+
+# Game Settings
+# Set by game functions
+var game_state: int = GlobalVars.GameState.START

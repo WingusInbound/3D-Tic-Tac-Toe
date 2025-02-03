@@ -35,7 +35,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("WorldGen/Camera3D:position")
+tracks/0/path = NodePath("Camera3D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -47,7 +47,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("WorldGen/Camera3D:rotation")
+tracks/1/path = NodePath("Camera3D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -59,7 +59,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("WorldGen/Camera3D:fov")
+tracks/2/path = NodePath("Camera3D:fov")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -76,7 +76,7 @@ step = 1.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("WorldGen/Camera3D:position")
+tracks/0/path = NodePath("Camera3D:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -88,7 +88,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("WorldGen/Camera3D:rotation")
+tracks/1/path = NodePath("Camera3D:rotation")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -104,7 +104,7 @@ length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("WorldGen/Camera3D:fov")
+tracks/0/path = NodePath("Camera3D:fov")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -141,53 +141,51 @@ script = ExtResource("1_nxcne")
 
 [node name="UI_Canvas" parent="." instance=ExtResource("2_v4d1a")]
 
-[node name="WinCheck" type="Node3D" parent="."]
-script = ExtResource("4_vb1hq")
-
-[node name="Ai" type="Node" parent="."]
-script = ExtResource("5_dmki4")
-
-[node name="WorldGen" type="Node3D" parent="."]
-script = ExtResource("6_ved8l")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="WorldGen"]
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)
 light_energy = 5.673
 light_size = 1.0
 light_specular = 9.023
 spot_range = 100.0
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldGen"]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-visible = false
-shadow_enabled = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="WorldGen"]
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
 material_override = SubResource("StandardMaterial3D_oef75")
 size = Vector3(200, 0.001, 200)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="WorldGen"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+visible = false
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4ywod")
 
-[node name="Camera3D" type="Camera3D" parent="WorldGen"]
-transform = Transform3D(0.707107, 0.298836, -0.640856, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640857, -5, 5, 5)
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, 0.298836, -0.640856, 0, 0.906308, 0.422618, 0.707107, -0.298836, 0.640856, -5, 5, 5)
 current = true
 fov = 100.0
 
-[node name="CameraAnimationPlayer" type="AnimationPlayer" parent="WorldGen"]
-root_node = NodePath("../..")
+[node name="CameraAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_r8lxa")
 }
 
-[node name="CubeAnimationPlayer" type="AnimationPlayer" parent="WorldGen"]
-root_node = NodePath("../..")
+[node name="CubeAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_4pypu")
 }
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="WorldGen"]
+[node name="WinCheck" type="Node3D" parent="."]
+script = ExtResource("4_vb1hq")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Ai" type="Node" parent="."]
+script = ExtResource("5_dmki4")
+
+[node name="WorldGen" type="Node" parent="."]
+script = ExtResource("6_ved8l")
 
 [node name="DemoCube" type="Node3D" parent="."]
 
@@ -390,4 +388,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1)
 [node name="Square15" parent="DemoCube/LayerThree" instance=ExtResource("3_edg6o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, 1)
 
-[connection signal="animation_finished" from="WorldGen/CameraAnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="CameraAnimationPlayer" to="." method="_on_animation_player_animation_finished"]

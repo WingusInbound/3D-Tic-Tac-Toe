@@ -9,6 +9,7 @@ func _ready():
 	cube_size_display_label.text = str(GlobalVars.cube_size)
 	ai_toggle_button.text = str(GlobalVars.ai_toggle).capitalize()
 
+
 func _on_cube_size_minus_button_pressed() -> void:
 	audio_player.stream = load("res://Assets/Sounds/Minimalist11.wav")
 	audio_player.play()

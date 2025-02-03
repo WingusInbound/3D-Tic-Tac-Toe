@@ -13,7 +13,7 @@ var paused: bool = false
 @onready var player_two: ColorPickerButton = $UI/OptionsMenu/Player2Color/ColorPickerButton
 @onready var pause_menu: VBoxContainer = $UI/PauseMenu
 @onready var end_menu: VBoxContainer = $UI/EndMenu
-@onready var audio_player: AudioStreamPlayer = get_node("/root/Main/AudioStreamPlayer")
+@onready var audio_player: AudioStreamPlayer = get_node("/root/Main/WorldGen/AudioStreamPlayer")
 
 
 func main_menu() -> void:
@@ -23,7 +23,6 @@ func main_menu() -> void:
 	end_menu.visible = false
 	player_one.color = GlobalVars.player_one_color
 	player_two.color = GlobalVars.player_two_color
-
 
 
 func toggle_pause() -> void:
