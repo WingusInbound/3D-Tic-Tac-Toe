@@ -66,9 +66,9 @@ func _on_tile_selected(square):
 # Returns positional cordinates of a box as a 3 digit string
 func get_string_coords(coords: Vector3) -> String:
 	var temp_string: String = ""
-	temp_string += str(coords.x + 2)
+	temp_string += str(coords.x + GlobalVars.cube_size/2)
 	temp_string += str(coords.y)
-	temp_string += str(coords.z + 2)
+	temp_string += str(coords.z + GlobalVars.cube_size/2)
 	return temp_string
 
 
