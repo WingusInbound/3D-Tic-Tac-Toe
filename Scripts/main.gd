@@ -25,15 +25,18 @@ var half_size: int
 @onready var camera_anim_player: AnimationPlayer = $CameraAnimationPlayer
 @onready var camera: Camera3D = $Camera3D
 @onready var spotlight: SpotLight3D = $SpotLight3D
+@onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var _connections = Messenger.SELECTED.connect(_on_tile_selected)
 	var player_one: Player = Player.new()
 	player_one.mesh = preload("res://Assets/player_one_square.tres")
+	player_one.sound_path = "res://Assets/Sounds/Retro11.wav"
 	player_one.value = 1
 	var player_two: Player = Player.new()
 	player_two.mesh = preload("res://Assets/player_two_square.tres")
+	player_two.sound_path = "res://Assets/Sounds/Retro12.wav"
 	player_two.value = -1
 	players = [player_one, player_two]
 	set_spotlight()
@@ -150,6 +153,8 @@ func set_camera() -> void:
 func _on_tile_selected(square):
 	if game_state != GlobalVars.GameState.PLAYER_TURN:
 		return
+	audio_player.stream = load(current_player.sound_path)
+	audio_player.play()
 	var key = get_string_coords(square.position)
 	var move = {key: square.value}
 	square_map.merge(move,true)
@@ -213,3 +218,4 @@ class Player:
 	var mesh: StandardMaterial3D
 	var color: Color
 	var value: int
+	var sound_path: String
