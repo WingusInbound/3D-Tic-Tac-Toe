@@ -1,0 +1,216 @@
+[gd_scene load_steps=5 format=3 uid="uid://2qa7nlw51tan"]
+
+[ext_resource type="Script" path="res://Scripts/ui.gd" id="1_pl5a1"]
+[ext_resource type="Script" path="res://Scripts/options_menu.gd" id="2_w1rd6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6j14q"]
+font_size = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_x0dmj"]
+
+[node name="UI_Canvas" type="CanvasLayer"]
+script = ExtResource("1_pl5a1")
+
+[node name="UI" type="Control" parent="."]
+z_index = 1
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartMenu" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = -290.0
+offset_top = -278.0
+offset_right = 290.0
+offset_bottom = 274.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="UI/StartMenu"]
+layout_mode = 2
+text = "TIC TAC TOE"
+label_settings = SubResource("LabelSettings_6j14q")
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="UI/StartMenu"]
+layout_mode = 2
+text = "Start"
+
+[node name="Options" type="Button" parent="UI/StartMenu"]
+layout_mode = 2
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="UI/StartMenu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="OptionsMenu" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -267.0
+offset_top = -283.0
+offset_right = 268.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+script = ExtResource("2_w1rd6")
+
+[node name="Title" type="Label" parent="UI/OptionsMenu"]
+layout_mode = 2
+text = "Options"
+label_settings = SubResource("LabelSettings_6j14q")
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="UI/OptionsMenu"]
+layout_mode = 2
+text = "Resume"
+
+[node name="CubeSize" type="HBoxContainer" parent="UI/OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="UI/OptionsMenu/CubeSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Size of Cube"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CubeSizeSelector" type="HBoxContainer" parent="UI/OptionsMenu/CubeSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="UI/OptionsMenu/CubeSize/CubeSizeSelector"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "-"
+
+[node name="Label2" type="Label" parent="UI/OptionsMenu/CubeSize/CubeSizeSelector"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+label_settings = SubResource("LabelSettings_x0dmj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button3" type="Button" parent="UI/OptionsMenu/CubeSize/CubeSizeSelector"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+"
+
+[node name="Player1Color" type="HBoxContainer" parent="UI/OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="UI/OptionsMenu/Player1Color"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Player 1"
+horizontal_alignment = 1
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="UI/OptionsMenu/Player1Color"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Player2Color" type="HBoxContainer" parent="UI/OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="UI/OptionsMenu/Player2Color"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Player 2"
+horizontal_alignment = 1
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="UI/OptionsMenu/Player2Color"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="QuitButton" type="Button" parent="UI/OptionsMenu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="PauseMenu" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -267.0
+offset_top = -273.0
+offset_right = 268.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="UI/PauseMenu"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_6j14q")
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="UI/PauseMenu"]
+layout_mode = 2
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="UI/PauseMenu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="EndMenu" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -286.5
+offset_top = -129.5
+offset_right = 286.5
+offset_bottom = 129.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="UI/EndMenu"]
+layout_mode = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_6j14q")
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UI/EndMenu"]
+layout_mode = 2
+text = "Play Again"
+
+[node name="QuitButton" type="Button" parent="UI/EndMenu"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="UI/StartMenu/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/StartMenu/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="UI/StartMenu/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="UI/OptionsMenu/ResumeButton" to="." method="_on_options_resume_button_pressed"]
+[connection signal="pressed" from="UI/OptionsMenu/CubeSize/CubeSizeSelector/Button" to="UI/OptionsMenu" method="_on_cube_size_minus_button_pressed"]
+[connection signal="pressed" from="UI/OptionsMenu/CubeSize/CubeSizeSelector/Button3" to="UI/OptionsMenu" method="_on_cube_size_plus_button_pressed"]
+[connection signal="pressed" from="UI/OptionsMenu/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="UI/EndMenu/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UI/EndMenu/QuitButton" to="." method="_on_quit_button_pressed"]

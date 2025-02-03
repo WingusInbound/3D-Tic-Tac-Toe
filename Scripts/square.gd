@@ -21,9 +21,7 @@ func _process(delta: float) -> void:
 func _on_area_3d_mouse_entered() -> void:
 	if selected:
 		return
-	elif main.game_state == 3:
-		return
-	else:
+	if main.game_state == GlobalVars.GameState.PLAY:
 		mesh.material_override = main.current_player.color
 
 
@@ -39,9 +37,7 @@ func _on_area_3d_input_event(camera: Node, event: InputEvent, event_position: Ve
 	if event.is_action_pressed("left_click"):
 		if selected:
 			return
-		elif main.game_state == 3:
-			return
-		else:
+		if main.game_state == GlobalVars.GameState.PLAY:
 			#print("Left Clicked")
 			mesh.material_override = main.current_player.color
 			value = main.current_player.value

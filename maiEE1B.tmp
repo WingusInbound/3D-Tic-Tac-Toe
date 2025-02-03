@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://dd15sdagi3yeb"]
+[gd_scene load_steps=13 format=3 uid="uid://dd15sdagi3yeb"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_r3jtu"]
 [ext_resource type="PackedScene" uid="uid://phuekkypyokb" path="res://Scenes/square.tscn" id="1_thsku"]
+[ext_resource type="Script" path="res://win_check.gd" id="3_b0wbc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oef75"]
 albedo_color = Color(0, 0, 0, 1)
@@ -692,5 +693,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 3, 1)
 libraries = {
 "": SubResource("AnimationLibrary_r8lxa")
 }
+
+[node name="WinCheck" type="Node3D" parent="."]
+script = ExtResource("3_b0wbc")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
