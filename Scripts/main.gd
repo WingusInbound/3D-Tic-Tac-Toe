@@ -121,8 +121,18 @@ func set_cube_animation_tracks() -> void:
 
 
 # Called in Ready, set camera starting position and animations
-func set_camera(): -> void:
-	pass
+func set_camera() -> void:
+	camera.postion = Vector3(-9,cube_size+2,cube_size+3) # Set starting location for camera
+	# Set animation track for play_game
+	var camera_anim: Animation = camera_anim_player.get_animation("play_game")
+	camera_anim.track_insert_key(0,0,camera.postion)
+	camera_anim.track_insert_key(0,2,Vector3(half_size-cube_size,cube_size+2,cube_size+3))
+	camera_anim.track_insert_key(0,4,Vector3(half_size-cube_size,cube_size*2,half_size))
+	# Duplicate play_game for game_win animation
+	var camera_anim_game_win = camera_anim.duplicate()
+	var library: AnimationLibrary = camera_anim_player.get_animation_library("")
+	library.add_animation("game_win", camera_anim_game_win)
+
 
 # Triggered when a box is clicked
 # Collects data from selected box and calls for applicable changes
@@ -174,9 +184,9 @@ func show_win():
 # Returns positional cordinates of a box as a 3 digit string
 func get_string_coords(coords: Vector3) -> String:
 	var temp_string: String = ""
-	temp_string += str(coords.x + GlobalVars.cube_size/2)
+	temp_string += str(coords.x + half_size)
 	temp_string += str(coords.y)
-	temp_string += str(coords.z + GlobalVars.cube_size/2)
+	temp_string += str(coords.z + half_size)
 	return temp_string
 	
 
