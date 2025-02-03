@@ -1,6 +1,6 @@
 extends VBoxContainer
 
-@onready var cube_size_display_label: Label = $CubeSize/HBoxContainer/Label2
+@onready var cube_size_display_label: Label = $CubeSize/CubeSizeSelector/Label2
 
 
 func _ready():
