@@ -3,5 +3,4 @@
 # Unknowns
 - Computer AI
 - Turns
-- Win Checks
-- Menu
+- Player Colors

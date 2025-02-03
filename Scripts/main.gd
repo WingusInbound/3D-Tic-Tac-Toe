@@ -1,8 +1,5 @@
 extends Node3D
 
-@export var player_color: Color
-@export var ai_color: Color
-
 # Public
 var game_state: int = GlobalVars.GameState.START
 var current_player: Player
@@ -14,6 +11,7 @@ var players: Array
 var winner
 var cube_size: int
 var half_size: int
+
 
 # On Ready
 @onready var layer_one = $LayerOne
@@ -33,10 +31,10 @@ var half_size: int
 func _ready() -> void:
 	var _connections = Messenger.SELECTED.connect(_on_tile_selected)
 	var player_one: Player = Player.new()
-	player_one.color = preload("res://Assets/player_one_square.tres")
+	player_one.mesh = preload("res://Assets/player_one_square.tres")
 	player_one.value = 1
 	var player_two: Player = Player.new()
-	player_two.color = preload("res://Assets/player_two_square.tres")
+	player_two.mesh = preload("res://Assets/player_two_square.tres")
 	player_two.value = -1
 	players = [player_one, player_two]
 	set_spotlight()
@@ -59,6 +57,9 @@ func start_game():
 	camera_anim_player.play("play_game")
 	cube_size = GlobalVars.cube_size
 	half_size = GlobalVars.cube_size/2
+	StandardMaterial3D
+	players[0].color = GlobalVars.player_one_color
+	players[1].color = GlobalVars.player_two_color
 	set_cube()
 	set_camera()
 
@@ -210,5 +211,6 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 class Player:
-	var color: StandardMaterial3D
+	var mesh: StandardMaterial3D
+	var color: Color
 	var value: int

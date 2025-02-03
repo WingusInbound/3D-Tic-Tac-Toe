@@ -9,6 +9,8 @@ var paused: bool = false
 @onready var main = get_parent()
 @onready var start_menu: VBoxContainer = $UI/StartMenu
 @onready var options_menu: VBoxContainer = $UI/OptionsMenu
+@onready var player_one: ColorPickerButton = $UI/OptionsMenu/Player1Color/ColorPickerButton
+@onready var player_two: ColorPickerButton = $UI/OptionsMenu/Player2Color/ColorPickerButton
 @onready var pause_menu: VBoxContainer = $UI/PauseMenu
 @onready var end_menu: VBoxContainer = $UI/EndMenu
 
@@ -18,6 +20,8 @@ func main_menu() -> void:
 	options_menu.visible = false
 	pause_menu.visible = false
 	end_menu.visible = false
+	player_one.color = GlobalVars.player_one_color
+	player_two.color = GlobalVars.player_two_color
 
 func toggle_pause() -> void:
 	if not paused:
@@ -57,5 +61,7 @@ func _on_options_pressed() -> void:
 
 
 func _on_options_resume_button_pressed() -> void:
+	GlobalVars.player_one_color = player_one.color
+	GlobalVars.player_two_color = player_two.color
 	start_menu.visible = true
 	options_menu.visible = false

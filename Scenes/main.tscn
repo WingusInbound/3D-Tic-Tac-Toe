@@ -136,8 +136,6 @@ _data = {
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_nxcne")
-player_color = Color(1, 0, 0, 1)
-ai_color = Color(0, 0, 1, 1)
 
 [node name="UI_Canvas" parent="." instance=ExtResource("2_v4d1a")]
 
