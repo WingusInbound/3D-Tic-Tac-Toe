@@ -20,6 +20,7 @@ var winner
 @onready var anim_player = $AnimationPlayer
 @onready var layers = [layer_one, layer_two, layer_three, layer_four]
 @onready var win_check: Node3D = $WinCheck
+@onready var ui: UI = $UI_Canvas
 
 
 # Called when the node enters the scene tree for the first time.
@@ -33,7 +34,7 @@ func _ready() -> void:
 	player_two.value = -1
 	players = [player_one, player_two]
 	set_square_map()
-	start_game()
+	ui.main_menu()
 
 
 # Called during Ready, sets up map of cube
@@ -49,15 +50,12 @@ func set_square_map():
 func start_game():
 	current_turn = randi_range(0, 1)
 	current_player = players[current_turn]
+	anim_player.play("play_game")
 
 
-# Unpacks cube when Spacebar pushed
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("spacebar"):
-		if game_state == GlobalVars.GameState.START:
-			anim_player.play("play_game")
-		elif game_state == GlobalVars.GameState.DONE:
-			get_tree().reload_current_scene()
+func _process(_delta) -> void:
+	if Input.is_action_just_pressed("pause") and game_state == GlobalVars.GameState.PLAY:
+		ui.toggle_pause()
 
 
 # Triggered when a box is clicked
@@ -113,11 +111,11 @@ func show_win():
 				else:
 					child.anim_player.play("shrink_player")
 	anim_player.play("rotate")
-
+	game_state = GlobalVars.GameState.DONE
+	ui.game_over()
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "game_win":
-		game_state = GlobalVars.GameState.DONE
 		show_win()
 	elif anim_name == "play_game":
 		game_state = GlobalVars.GameState.PLAY

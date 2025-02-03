@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://dd15sdagi3yeb"]
+[gd_scene load_steps=14 format=3 uid="uid://dd15sdagi3yeb"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_r3jtu"]
 [ext_resource type="PackedScene" uid="uid://phuekkypyokb" path="res://Scenes/square.tscn" id="1_thsku"]
+[ext_resource type="PackedScene" uid="uid://2qa7nlw51tan" path="res://Scripts/ui.tscn" id="2_ffm2s"]
 [ext_resource type="Script" path="res://win_check.gd" id="3_b0wbc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oef75"]
@@ -465,6 +466,8 @@ _data = {
 script = ExtResource("1_r3jtu")
 player_color = Color(1, 0, 0, 1)
 ai_color = Color(0, 0, 1, 1)
+
+[node name="UI_Canvas" parent="." instance=ExtResource("2_ffm2s")]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0)

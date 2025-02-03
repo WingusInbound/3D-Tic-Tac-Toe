@@ -1,0 +1,116 @@
+[gd_scene load_steps=3 format=3 uid="uid://2qa7nlw51tan"]
+
+[ext_resource type="Script" path="res://Scripts/ui.gd" id="1_pl5a1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6j14q"]
+font_size = 100
+
+[node name="UI_Canvas" type="CanvasLayer"]
+script = ExtResource("1_pl5a1")
+
+[node name="UI" type="Control" parent="."]
+z_index = 1
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartMenu" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -267.5
+offset_top = -129.5
+offset_right = 267.5
+offset_bottom = 129.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="UI/StartMenu"]
+layout_mode = 2
+text = "TIC TAC TOE"
+label_settings = SubResource("LabelSettings_6j14q")
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="UI/StartMenu"]
+layout_mode = 2
+text = "Start"
+
+[node name="QuitButton" type="Button" parent="UI/StartMenu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="PauseMenu" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -267.5
+offset_top = -129.5
+offset_right = 267.5
+offset_bottom = 129.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="UI/PauseMenu"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_6j14q")
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="UI/PauseMenu"]
+layout_mode = 2
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="UI/PauseMenu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="EndMenu" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -286.5
+offset_top = -129.5
+offset_right = 286.5
+offset_bottom = 129.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="UI/EndMenu"]
+layout_mode = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_6j14q")
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UI/EndMenu"]
+layout_mode = 2
+text = "Play Again"
+
+[node name="QuitButton" type="Button" parent="UI/EndMenu"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="UI/StartMenu/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/StartMenu/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="UI/EndMenu/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UI/EndMenu/QuitButton" to="." method="_on_quit_button_pressed"]
