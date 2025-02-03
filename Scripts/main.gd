@@ -1,6 +1,7 @@
 extends Node3D
 
 enum {PLAYER_ONE, PLAYER_TWO}
+enum GameState {START, PLAY, END}
 
 const CUBE_SIZE: int = 4
 
@@ -8,7 +9,7 @@ const CUBE_SIZE: int = 4
 @export var ai_color: Color
 
 # Public
-var game_over = false
+var game_state: int = GameState.START
 var current_player: Player
 
 # Private
@@ -36,12 +37,12 @@ func _ready() -> void:
 	player_two.color = preload("res://Assets/player_two_square.tres")
 	player_two.value = -1
 	players = [player_one, player_two]
-	set_square_map(layers)
+	set_square_map()
 	start_game()
 
 
 # Called during Ready, sets up map of cube
-func set_square_map(layers):
+func set_square_map():
 	for i in layers:
 		var children = i.get_children()
 		for child in children:
@@ -58,7 +59,12 @@ func start_game():
 # Unpacks cube when Spacebar pushed
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("spacebar"):
-		anim_player.play("play_game")
+		if game_state == GameState.START:
+			anim_player.play("play_game")
+			game_state = GameState.PLAY
+
+		elif game_state == GameState.END:
+			get_tree().reload_current_scene()
 
 
 # Triggered when a box is clicked
@@ -82,17 +88,16 @@ func get_string_coords(coords: Vector3) -> String:
 # Determines if the selected box results in a win
 # Otherwise, toggle current player
 func turn(key):
+	print("Key: ", key)
 	possible_wins = []
 	get_potential_wins(key)
-	#get_cross_diagonal_wins()
-	print("Possible wins: ", possible_wins)
-	winner = check_wins(possible_wins)
+	get_cross_diagonal_wins(key)
+	winner = check_wins()
 	if winner:
 		if current_turn == 0:
 			print("Player 1 Wins!")
 		else:
 			print("Player 2 Wins")
-		game_over = true
 		anim_player.play_backwards("game_win")
 	else:
 		current_turn = (current_turn + 1) % 2
@@ -155,6 +160,7 @@ func get_potential_wins(key):
 						# Second digit set to max value - i
 						else:
 							diagonal_assembly += str((CUBE_SIZE - 1) - i)
+							diag_toggle -= 1
 
 			# Add cords to rows
 			card_list.append(cardinal_assembly)
@@ -164,7 +170,7 @@ func get_potential_wins(key):
 		card_list.append("card")
 		possible_wins.append(card_list)
 		if len(diag_list) > 0:
-			diag_list.append("diag")
+			diag_list.append("diag" + str(diag_type))
 			possible_wins.append(diag_list)
 
 
@@ -172,7 +178,7 @@ func get_diag_type(dimension, key):
 	"""
 	Removes dimentional position from cord to determine if key is part of
 	forward diag (remaining numbers are equal) or
-	back diag (remaining numbers sun to max cube value - 1)
+	back diag (remaining numbers sum to max cube value - 1)
 	"""
 	# Removes dimension from cord to compare remaining digits
 	var local_cords: String = ""
@@ -189,14 +195,66 @@ func get_diag_type(dimension, key):
 		return 0 # No diag on current plane
 
 
-func check_wins(wins):
+func get_cross_diagonal_wins(key):
+	"""
+	Cross diagonals observe the following pattern:
+		The cords are either all the same (333)
+		or there are 2 shared numbers and one different number X
+		where X equals the max value minus the shared value (221, if cube size is 4)
+	"""
+	var shared: String = ""
+	var diff: String = ""
+	var diff_pos: int = -1
+	var cross_assembly: String
+	var cross_list: Array = []
+
+	# Determines which number is different, and the position in the cord
+	for cord_pos in range(0,3):
+		if shared == "":
+			shared = key[cord_pos]
+		if key[cord_pos] == diff:
+			diff = shared
+			diff_pos = 0
+			shared = key[cord_pos]
+		if key[cord_pos] != shared:
+			diff = key[cord_pos]
+			diff_pos = cord_pos
+
+	# If all numbers the same (no diff), cross is 000, 111, 222, 333
+	if diff == "":
+		for i in range(0, CUBE_SIZE):
+			cross_assembly = ""
+			for j in range (0,3):
+				cross_assembly += str(i)
+			cross_list.append(cross_assembly)
+
+	# Else, the differing position is incremented while the others are decremented
+	# Eg 330, 221, 112, 003
+	elif int(diff) == CUBE_SIZE - 1 - int(shared):
+		for i in range(0, CUBE_SIZE):
+			cross_assembly = ""
+			for cord_pos in range(0,3):
+				if cord_pos == diff_pos:
+					cross_assembly += str(i)
+				else:
+					cross_assembly += str(CUBE_SIZE - 1 - i)
+			cross_list.append(cross_assembly)
+
+	# If cross list not empty, add to possible wins
+	if len(cross_list) > 0:
+		cross_list.append("cross")
+		possible_wins.append(cross_list)
+
+
+func check_wins():
 	# Checks each row in list of possible wins
-	for row in wins:
+	for row in possible_wins:
+		#print("Row: ", row)
 		var counter = 0
 
 		# Checks if there are 4 selected boxes in that row
 		for cord in row:
-			if cord in ["diag", "card"]:
+			if cord in ["diag1", "diag2", "card", "cross"]:
 				continue
 			counter += square_map[cord]
 		if abs(counter) == 4:
@@ -224,6 +282,7 @@ func show_win():
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "game_win":
+		game_state = GameState.END
 		show_win()
 
 
