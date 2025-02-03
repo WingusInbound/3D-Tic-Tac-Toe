@@ -59,7 +59,6 @@ func start_game():
 	camera_anim_player.play("play_game")
 	cube_size = GlobalVars.cube_size
 	half_size = GlobalVars.cube_size/2
-	StandardMaterial3D
 	players[0].color = GlobalVars.player_one_color
 	players[1].color = GlobalVars.player_two_color
 	set_cube()
