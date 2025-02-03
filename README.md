@@ -3,4 +3,3 @@
 # Unknowns
 - Computer AI
 - Turns
-- Player Colors
