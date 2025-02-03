@@ -14,14 +14,17 @@ var players: Array
 var winner
 
 # On Ready
-@onready var layer_one = $LayerOne
-@onready var layer_two = $LayerTwo
-@onready var layer_three = $LayerThree
-@onready var layer_four = $LayerFour
-@onready var anim_player = $AnimationPlayer
-@onready var layers = [layer_one, layer_two, layer_three, layer_four]
+#@onready var layer_one = $LayerOne
+#@onready var layer_two = $LayerTwo
+#@onready var layer_three = $LayerThree
+#@onready var layer_four = $LayerFour
+#@onready var layers = [layer_one, layer_two, layer_three, layer_four]
+#@onready var cube_anim_player = $AnimationPlayer
 @onready var win_check: Node3D = $WinCheck
 @onready var ui: UI = $UI_Canvas
+@onready var cube_anim_player: AnimationPlayer = $CubeAnimationPlayer
+@onready var camera_anim_player: AnimationPlayer = $CameraAnimationPlayer
+@onready var camera: Camera3D = $Camera3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
