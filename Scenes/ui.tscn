@@ -139,6 +139,20 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="AIToggle" type="HBoxContainer" parent="UI/OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="UI/OptionsMenu/AIToggle"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "AI Toggle"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="UI/OptionsMenu/AIToggle"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="QuitButton" type="Button" parent="UI/OptionsMenu"]
 layout_mode = 2
 text = "Quit"
@@ -209,6 +223,7 @@ text = "Quit"
 [connection signal="pressed" from="UI/OptionsMenu/ResumeButton" to="." method="_on_options_resume_button_pressed"]
 [connection signal="pressed" from="UI/OptionsMenu/CubeSize/CubeSizeSelector/Button" to="UI/OptionsMenu" method="_on_cube_size_minus_button_pressed"]
 [connection signal="pressed" from="UI/OptionsMenu/CubeSize/CubeSizeSelector/Button3" to="UI/OptionsMenu" method="_on_cube_size_plus_button_pressed"]
+[connection signal="pressed" from="UI/OptionsMenu/AIToggle/Button" to="UI/OptionsMenu" method="_on_ai_toggle_button_pressed"]
 [connection signal="pressed" from="UI/OptionsMenu/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/QuitButton" to="." method="_on_quit_button_pressed"]
