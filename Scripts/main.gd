@@ -75,7 +75,6 @@ func get_string_coords(coords: Vector3) -> String:
 # Determines if the selected box results in a win
 # Otherwise, toggle current player
 func turn(key):
-	print("Key: ", key)
 	winner = win_check.validate(key)
 	if winner:
 		game_state = GlobalVars.GameState.ENDING
@@ -83,7 +82,8 @@ func turn(key):
 			print("Player 1 Wins!")
 		else:
 			print("Player 2 Wins")
-		anim_player.play_backwards("game_win")
+		cube_anim_player.play_backwards("game_win")
+		camera_anim_player.play_backwards("game_win")
 	else:
 		current_turn = (current_turn + 1) % 2
 		current_player = players[current_turn]
