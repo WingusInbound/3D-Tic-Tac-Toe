@@ -19,7 +19,6 @@ config/icon="res://icon.svg"
 
 Messenger="*res://Scripts/messenger.gd"
 GlobalVars="*res://Scripts/global_vars.gd"
-GameManager="*res://Scripts/game_manager.gd"
 
 [input]
 
