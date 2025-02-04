@@ -2,7 +2,7 @@ extends VBoxContainer
 
 @onready var cube_size_display_label: Label = $CubeSize/CubeSizeSelector/Label2
 @onready var ai_toggle_button: Button = $AIToggle/Button
-@onready var audio_player: AudioStreamPlayer = get_node("/root/Main/AudioStreamPlayer")
+@onready var audio_player: AudioStreamPlayer = get_node("/root/Main/WorldGen/AudioStreamPlayer")
 
 
 func _ready():

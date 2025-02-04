@@ -13,7 +13,7 @@ var winner
 @onready var win_check: Node3D = $WinCheck
 @onready var ui: UI = $UI_Canvas
 @onready var ai_player: Node = $Ai
-@onready var world_gen: Node = $WorldGen
+@onready var world_gen: Node3D = $WorldGen
 
 
 # Called when the node enters the scene tree for the first time.
@@ -35,7 +35,7 @@ func _ready() -> void:
 
 	GlobalVars.game_state = GlobalVars.GameState.MAIN_MENU
 	ui.main_menu()
-	# Player leaving main menu triggers start_game() via _on_animation_player_animation_finished
+	# Player leaving main menu triggers start_game() via _on_start_button_pressed()
 
 
 # Runs every physics frame
@@ -44,38 +44,56 @@ func _process(_delta) -> void:
 		ui.toggle_pause()
 
 
-# Game Manager
-func game_manager():
-	pass
-
-
 # Called during Ready, chooses and sets starting player
 func start_game():
+	GlobalVars.game_state = GlobalVars.GameState.SETUP
 	$DemoCube.visible = false # Hide demo cube
 	current_turn = randi_range(0, 1) # Choose random starting player
 	current_player = players[current_turn] # Set starting player
 	players[0].color = GlobalVars.player_one_color
 	players[1].color = GlobalVars.player_two_color
 	world_gen.setup_game()
+	# Animation after setup triggers game_manager() via _on_animation_player_animation_finished
 
 
-# Triggered when a box is clicked
-# Collects data from selected box and calls for applicable changes
-func _on_tile_selected(square):
+# Initiates Primary Game Loop
+func game_manager():
+
+	if current_turn == 1 and GlobalVars.ai_toggle:
+		GlobalVars.game_state = GlobalVars.GameState.AI_TURN
+
+		# TODO: AI Stuff
+		# Call record_move(), passing a square object representing AI move
+
+	else:
+		# Setting game state to Player Turn enables selection of squares by human player
+		# Selection is routed through _on_tile_selected and passed to record_move()
+		GlobalVars.game_state = GlobalVars.GameState.PLAYER_TURN
+
+
+# Triggered when a box is clicked by a human player
+# Plays audio and passes data to record_move()
+func _on_tile_selected(tile):
 	if GlobalVars.game_state != GlobalVars.GameState.PLAYER_TURN:
 		return
 	world_gen.audio_player.stream = load(current_player.sound_path)
 	world_gen.audio_player.play()
+	record_move(tile)
+
+
+# Converts square object coordinants, records that move on square_map
+# and passes coords to check_wins()
+func record_move(square):
+	GlobalVars.game_state = GlobalVars.GameState.VALIDATION
 	var key = get_string_coords(square.position)
 	var move = {key: square.value}
 	square_map.merge(move,true)
-	turn(key)
+	check_wins(key)
 
 
-# Determines if the selected box results in a win
-# Otherwise, toggle current player
-func turn(key):
-	winner = win_check.validate(key)
+# Runs choosen coords through WinCheck, if there is a return value, the current player has won
+func check_wins(coord):
+	winner = win_check.validate(coord)
 	if winner:
 		GlobalVars.game_state = GlobalVars.GameState.ENDING
 		if current_turn == 0:
@@ -84,29 +102,13 @@ func turn(key):
 			print("Player 2 Wins")
 		world_gen.cube_anim_player.play_backwards("game_win")
 		world_gen.camera_anim_player.play_backwards("game_win")
+		# show_win() triggered after animation via _on_animation_player_animation_finished()
+
+	# If no winner, switch player and restart game loop
 	else:
 		current_turn = (current_turn + 1) % 2
 		current_player = players[current_turn]
-
-
-func show_win():
-	var cube_node: Node3D = get_node("/root/Main/Cube")
-	var layers = cube_node.get_children()
-	for i in layers:
-		var children = i.get_children()
-		for child in children:
-			var temp_key = get_string_coords(child.position)
-			if str(temp_key) in winner:
-				continue
-			else:
-				if child.value == 0:
-					child.anim_player.play("shrink")
-				else:
-					child.anim_player.play("shrink_player")
-	world_gen.cube_anim_player.play("rotate")
-	world_gen.camera_anim_player.play("rotate")
-	GlobalVars.game_state = GlobalVars.GameState.DONE
-	ui.game_over()
+		game_manager()
 
 
 # Returns positional cordinates of a box as a 3 digit string
@@ -120,9 +122,10 @@ func get_string_coords(coords: Vector3) -> String:
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "game_win":
-		show_win()
+		world_gen.show_win()
+		ui.game_over()
 	elif anim_name == "play_game":
-		GlobalVars.game_state = GlobalVars.GameState.PLAYER_TURN
+		game_manager()
 
 
 class Player:

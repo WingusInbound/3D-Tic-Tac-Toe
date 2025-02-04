@@ -1,3 +1,12 @@
+"""
+WorldGen
+setup_game() is called at the end of start_game()
+	- Builds the cube based on customizable size
+	- Sets up cube and camera animations
+show_win() is the final animation after a win
+Both are called in main
+"""
+
 extends Node
 
 var cube_size: int
@@ -18,11 +27,10 @@ func _ready():
 
 # Called by main.start_game(), builds cube and playes starting animation
 func setup_game():
-	cube_anim_player.play("play_game")
-	camera_anim_player.play("play_game")
 	set_cube()
 	set_camera()
-
+	cube_anim_player.play("play_game")
+	camera_anim_player.play("play_game")
 
 # Creates the Node for the cube, each layer, and the squares.
 func set_cube() -> void:
@@ -111,3 +119,24 @@ func set_camera() -> void:
 	var camera_anim_game_win = camera_anim.duplicate()
 	var library: AnimationLibrary = camera_anim_player.get_animation_library("")
 	library.add_animation("game_win", camera_anim_game_win)
+
+
+# Called after "game_win" animation is finished playing
+# Displays winning row, shrinks other squares and rotates the cube
+func show_win():
+	var cube_node: Node3D = get_node("/root/Main/Cube")
+	var layers = cube_node.get_children()
+	for i in layers:
+		var children = i.get_children()
+		for child in children:
+			var temp_key = main.get_string_coords(child.position)
+			if str(temp_key) in main.winner:
+				continue
+			else:
+				if child.value == 0:
+					child.anim_player.play("shrink")
+				else:
+					child.anim_player.play("shrink_player")
+	cube_anim_player.play("rotate")
+	camera_anim_player.play("rotate")
+	GlobalVars.game_state = GlobalVars.GameState.DONE

@@ -22,7 +22,7 @@ func get_potential_wins(key):
 	For each of the 3 dimensions, splits the cube into 4 planes
 	The key will be in the same position on each plane, representing a cardinal win through the cube
 	The key may be in either a forward or back diagonal across the plane
-	A cord position is selected to represet the dimension
+	A cord position is selected to represent the dimension
 	For cardinal wins that position is incremented to represent each plane
 	For diagonal wins that position is locked to check diags across that plane
 	"""
