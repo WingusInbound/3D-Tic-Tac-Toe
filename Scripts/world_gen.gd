@@ -65,7 +65,7 @@ func set_cube() -> void:
 				layer_node.add_child(temp_square)
 				temp_square.global_position = Vector3(x-half_size,y,z-half_size)
 				var temp_key = main.get_string_coords(temp_square.position)
-				main.square_map.get_or_add(temp_key,temp_square.value)
+				main.square_map.get_or_add(temp_key,0)
 
 		# Set Animation Track for each layer
 		set_layer_animation_track(y, layer_node)
@@ -129,7 +129,7 @@ func show_win():
 	for i in layers:
 		var children = i.get_children()
 		for child in children:
-			var temp_key = main.get_string_coords(child.position)
+			var temp_key = child.get_string_coords()
 			if str(temp_key) in main.winner:
 				continue
 			else:
@@ -139,4 +139,3 @@ func show_win():
 					child.anim_player.play("shrink_player")
 	cube_anim_player.play("rotate")
 	camera_anim_player.play("rotate")
-	GlobalVars.game_state = GlobalVars.GameState.DONE

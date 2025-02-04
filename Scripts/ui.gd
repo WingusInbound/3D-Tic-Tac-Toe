@@ -63,7 +63,6 @@ func _on_resume_button_pressed() -> void:
 func _on_restart_button_pressed() -> void:
 	audio_player.stream = load("res://Assets/Sounds/Minimalist11.wav")
 	audio_player.play()
-	await audio_player.finished
 	get_tree().reload_current_scene()
 
 

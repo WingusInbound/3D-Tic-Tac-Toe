@@ -60,40 +60,50 @@ func start_game():
 func game_manager():
 
 	if current_turn == 1 and GlobalVars.ai_toggle:
+		# AI Turn
 		GlobalVars.game_state = GlobalVars.GameState.AI_TURN
 
-		# TODO: AI Stuff
-		# Call record_move(), passing a square object representing AI move
+		# TODO: AI will need to:
+		# Read square_map and choose a move
+		# Find the tile and pass the object to update_tile()
+		# Pass the key from square_map to process_turn()
 
 	else:
 		# Setting game state to Player Turn enables selection of squares by human player
-		# Selection is routed through _on_tile_selected and passed to record_move()
+		# Selection is routed through _on_tile_selected and passed to process_turn()
 		GlobalVars.game_state = GlobalVars.GameState.PLAYER_TURN
 
 
 # Triggered when a box is clicked by a human player
-# Plays audio and passes data to record_move()
+# Plays audio, then calls for updating the selected box,
+# converts positional data to string and passes to process_turn()
 func _on_tile_selected(tile):
 	if GlobalVars.game_state != GlobalVars.GameState.PLAYER_TURN:
 		return
 	world_gen.audio_player.stream = load(current_player.sound_path)
 	world_gen.audio_player.play()
-	record_move(tile)
+	update_tile(tile)
+	process_turn(tile.get_string_coords())
 
 
-# Converts square object coordinants, records that move on square_map
-# and passes coords to check_wins()
-func record_move(square):
+# Takes in a tile object and updates it according to current player
+func update_tile(tile):
+	tile.value = current_player.value
+	tile.selected = true
+	tile.update_color()
+
+
+# Records move on square_map, and checks for wins
+# If win_check.validate returns a value, the current player has won
+func process_turn(key):
+	# Set game mode
 	GlobalVars.game_state = GlobalVars.GameState.VALIDATION
-	var key = get_string_coords(square.position)
-	var move = {key: square.value}
+	# Record move on square_map
+	var move = {key: current_player.value}
 	square_map.merge(move,true)
-	check_wins(key)
+	# Check for winner
+	winner = win_check.validate(key)
 
-
-# Runs choosen coords through WinCheck, if there is a return value, the current player has won
-func check_wins(coord):
-	winner = win_check.validate(coord)
 	if winner:
 		GlobalVars.game_state = GlobalVars.GameState.ENDING
 		if current_turn == 0:
@@ -111,21 +121,13 @@ func check_wins(coord):
 		game_manager()
 
 
-# Returns positional cordinates of a box as a 3 digit string
-func get_string_coords(coords: Vector3) -> String:
-	var temp_string: String = ""
-	temp_string += str(coords.x + (GlobalVars.cube_size / 2))
-	temp_string += str(coords.y)
-	temp_string += str(coords.z + (GlobalVars.cube_size / 2))
-	return temp_string
-
-
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "game_win":
+	if anim_name == "play_game":
+		game_manager()
+	elif anim_name == "game_win":
+		GlobalVars.game_state = GlobalVars.GameState.DONE
 		world_gen.show_win()
 		ui.game_over()
-	elif anim_name == "play_game":
-		game_manager()
 
 
 class Player:
