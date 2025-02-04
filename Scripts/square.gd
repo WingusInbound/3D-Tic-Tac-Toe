@@ -46,6 +46,7 @@ func update_color():
 	mesh.material_override = main.current_player.mesh
 	mesh.material_override.albedo_color = main.current_player.color
 
+
 # Returns positional cordinates of a box as a 3 digit string
 func get_string_coords() -> String:
 	var temp_string: String = ""

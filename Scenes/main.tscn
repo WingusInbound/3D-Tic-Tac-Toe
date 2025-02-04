@@ -144,7 +144,7 @@ script = ExtResource("1_nxcne")
 [node name="WinCheck" type="Node3D" parent="."]
 script = ExtResource("4_vb1hq")
 
-[node name="Ai" type="Node" parent="."]
+[node name="AI" type="Node3D" parent="."]
 script = ExtResource("5_dmki4")
 
 [node name="WorldGen" type="Node3D" parent="."]

@@ -121,6 +121,11 @@ func set_camera() -> void:
 	library.add_animation("game_win", camera_anim_game_win)
 
 
+# Takes in a vector3 and uses it to return the tile object at those coords
+func locate_tile(coords):
+	pass
+
+
 # Called after "game_win" animation is finished playing
 # Displays winning row, shrinks other squares and rotates the cube
 func show_win():

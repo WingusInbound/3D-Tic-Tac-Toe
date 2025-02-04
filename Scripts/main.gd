@@ -3,11 +3,11 @@ extends Node3D
 # Public
 
 # Private
-var square_map = {}
-var current_turn: int
-var current_player: Player
-var players: Array
-var winner
+var square_map = {} # Tracks the state of the game as a dict
+var current_turn: int # 0 or 1, toggles current player
+var current_player: Player # Player object of current player, used to change per player settings
+var players: Array # Used to contain and refer to Player objects
+var winner # String representing the winning row of tiles
 
 # On Ready
 @onready var win_check: Node3D = $WinCheck
@@ -67,6 +67,12 @@ func game_manager():
 		# Read square_map and choose a move
 		# Find the tile and pass the object to update_tile()
 		# Pass the key from square_map to process_turn()
+		"""
+		var key = ai_player.select_move(square_map)   ### TODO
+		var coords: Vector3 = ai_player.get_box_coords(key)
+		var tile = world_gen.locate_tile(coords)   ### TODO
+		process_turn(key)
+		"""
 
 	else:
 		# Setting game state to Player Turn enables selection of squares by human player
@@ -75,14 +81,15 @@ func game_manager():
 
 
 # Triggered when a box is clicked by a human player
-# Plays audio, then calls for updating the selected box,
-# converts positional data to string and passes to process_turn()
 func _on_tile_selected(tile):
 	if GlobalVars.game_state != GlobalVars.GameState.PLAYER_TURN:
 		return
+	# Plays audio
 	world_gen.audio_player.stream = load(current_player.sound_path)
 	world_gen.audio_player.play()
+	# Updates tile according to current player
 	update_tile(tile)
+	# Converts positional data to string and passes to process_turn()
 	process_turn(tile.get_string_coords())
 
 
@@ -101,9 +108,9 @@ func process_turn(key):
 	# Record move on square_map
 	var move = {key: current_player.value}
 	square_map.merge(move,true)
+
 	# Check for winner
 	winner = win_check.validate(key)
-
 	if winner:
 		GlobalVars.game_state = GlobalVars.GameState.ENDING
 		if current_turn == 0:
