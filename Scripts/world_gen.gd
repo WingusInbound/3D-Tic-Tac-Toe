@@ -64,7 +64,7 @@ func set_cube() -> void:
 				temp_square.name = "Square" + str(x*cube_size+z) # Names square node
 				layer_node.add_child(temp_square)
 				temp_square.global_position = Vector3(x-half_size,y,z-half_size)
-				var temp_key = main.get_string_coords(temp_square.position)
+				var temp_key = temp_square.get_string_coords()
 				main.square_map.get_or_add(temp_key,0)
 
 		# Set Animation Track for each layer

@@ -65,14 +65,14 @@ func game_manager():
 
 		# TODO: AI will need to:
 		# Read square_map and choose a move
-		# Find the tile and pass the object to update_tile()
-		# Pass the key from square_map to process_turn()
-		"""
 		var key = ai_player.select_move(square_map)   ### TODO
+
+		# Find the tile and pass the object to update_tile()
 		var coords: Vector3 = ai_player.get_box_coords(key)
-		var tile = world_gen.locate_tile(coords)   ### TODO
+		update_tile(world_gen.locate_tile(coords))   ### TODO
+
+		# Pass the key from square_map to process_turn()
 		process_turn(key)
-		"""
 
 	else:
 		# Setting game state to Player Turn enables selection of squares by human player
@@ -103,7 +103,6 @@ func update_tile(tile):
 # Records move on square_map, and checks for wins
 # If win_check.validate returns a value, the current player has won
 func process_turn(key):
-	# Set game mode
 	GlobalVars.game_state = GlobalVars.GameState.VALIDATION
 	# Record move on square_map
 	var move = {key: current_player.value}
