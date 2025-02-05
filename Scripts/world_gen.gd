@@ -13,7 +13,7 @@ var cube_size: int
 var half_size: int
 
 @onready var spotlight: SpotLight3D = $SpotLight3D
-@onready var square = preload("res://Scenes/square.tscn")
+@onready var square_scene = preload("res://Scenes/square.tscn")
 @onready var cube_anim_player: AnimationPlayer = $CubeAnimationPlayer
 @onready var camera_anim_player: AnimationPlayer = $CameraAnimationPlayer
 @onready var camera: Camera3D = $Camera3D
@@ -49,23 +49,20 @@ func set_cube() -> void:
 	for y in range(cube_size):
 
 		# Create Layer
-		var temp_layer = Node3D.new() # Create a new node
-		temp_layer.name = "Layer" + str(y) # Sets layer name
-		cube_node.add_child(temp_layer) # Adds node as child of Cube
-		var layer_node: Node3D = get_node("/root/Main/Cube/" + str(temp_layer.name)) # Get Layer node
+		var layer_assembly = Node3D.new() # Create a new node
+		layer_assembly.name = "Layer" + str(y) # Sets layer name
+		cube_node.add_child(layer_assembly) # Adds node as child of Cube
+		var layer_node: Node3D = get_node("/root/Main/Cube/" + str(layer_assembly.name)) # Get Layer node
 
 		# For each dimension, x
 		for x in range(cube_size):
 			# For each dimension, z
 			for z in range(cube_size):
 
-				# Create Square, set position, and add to square_map
-				var temp_square = square.instantiate()
-				temp_square.name = "Square" + str(x*cube_size+z) # Names square node
-				layer_node.add_child(temp_square)
-				temp_square.global_position = Vector3(x-half_size,y,z-half_size)
-				var temp_key = temp_square.get_string_coords()
-				main.square_map.get_or_add(temp_key,0)
+				# Create Square, and run configuration method
+				var tile_assembly = square_scene.instantiate()
+				layer_node.add_child(tile_assembly)
+				tile_assembly.configure(x,y,z)
 
 		# Set Animation Track for each layer
 		set_layer_animation_track(y, layer_node)

@@ -38,3 +38,6 @@ Animation finished
 	set game mode to done
 	display end menu
 '''
+
+AI
+--

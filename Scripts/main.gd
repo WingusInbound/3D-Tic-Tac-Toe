@@ -105,8 +105,8 @@ func update_tile(tile):
 func process_turn(key):
 	GlobalVars.game_state = GlobalVars.GameState.VALIDATION
 	# Record move on square_map
-	var move = {key: current_player.value}
-	square_map.merge(move,true)
+	var tile = square_map[key]
+	tile.value = current_player.value
 
 	# Check for winner
 	winner = win_check.validate(key)
