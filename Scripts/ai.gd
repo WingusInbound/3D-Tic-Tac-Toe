@@ -13,15 +13,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func select_move(map) -> String:
-	var selection = map.keys()[randi() % map.size]
-	return selection.key
-
-
-# Takes in a 3 digit string and returns Vector3 coordinates
-func get_box_coords(key) -> Vector3:
-	var temp_vector: Vector3
-	temp_vector.x = int(key[0]) - (GlobalVars.cube_size / 2)
-	temp_vector.y = int(key[1])
-	temp_vector.z = int(key[2]) - (GlobalVars.cube_size / 2)
-	return temp_vector
+func select_move(map) -> Object:
+	# Needs to pick a tile based on weight and return the tile object
+	return

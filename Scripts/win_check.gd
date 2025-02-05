@@ -161,14 +161,14 @@ func get_cross_diagonal_wins(key):
 func check_wins():
 	# Checks each row in list of possible wins
 	for row in possible_wins:
-		#print("Row: ", row)
 		var counter = 0
 
 		# Checks if there are 4 selected boxes in that row
-		for cord in row:
-			if cord in ["diag1", "diag2", "card", "cross"]:
+		for tile_coord in row:
+			if tile_coord in ["diag1", "diag2", "card", "cross"]:
 				continue
-			counter += main.square_map[cord]
+			var tile = main.square_map[tile_coord]
+			print(tile)
+			counter += tile.value
 		if abs(counter) == GlobalVars.cube_size:
-			#print("WIN")
 			return row
