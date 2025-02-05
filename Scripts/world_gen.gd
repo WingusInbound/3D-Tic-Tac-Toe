@@ -32,6 +32,7 @@ func setup_game():
 	cube_anim_player.play("play_game")
 	camera_anim_player.play("play_game")
 
+
 # Creates the Node for the cube, each layer, and the squares.
 func set_cube() -> void:
 
@@ -62,7 +63,7 @@ func set_cube() -> void:
 				# Create Square, and run configuration method
 				var tile_assembly = square_scene.instantiate()
 				layer_node.add_child(tile_assembly)
-				tile_assembly.configure(x,y,z)
+				tile_assembly.configure(x,y,z) # X, Y, Z represent position in cube
 
 		# Set Animation Track for each layer
 		set_layer_animation_track(y, layer_node)
@@ -116,11 +117,6 @@ func set_camera() -> void:
 	var camera_anim_game_win = camera_anim.duplicate()
 	var library: AnimationLibrary = camera_anim_player.get_animation_library("")
 	library.add_animation("game_win", camera_anim_game_win)
-
-
-# Takes in a vector3 and uses it to return the tile object at those coords
-func locate_tile(coords):
-	pass
 
 
 # Called after "game_win" animation is finished playing

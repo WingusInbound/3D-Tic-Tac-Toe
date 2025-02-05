@@ -4,9 +4,9 @@ extends Node3D
 var value: int # -1 = Player Two selected, 1 = Player One selected
 var key: String # Positional coordinate as a string ie 230
 var weight: int # How highly the AI should prioritize this tile
+var selected: bool = false
 
 # Private
-var selected: bool = false
 var main: Node3D
 
 # On Ready

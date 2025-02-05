@@ -44,7 +44,7 @@ func _process(_delta) -> void:
 		ui.toggle_pause()
 
 
-# Called during Ready, chooses and sets starting player
+# Called when player leaves Main Menu, chooses and sets starting player
 func start_game():
 	GlobalVars.game_state = GlobalVars.GameState.SETUP
 	$DemoCube.visible = false # Hide demo cube
@@ -63,16 +63,10 @@ func game_manager():
 		# AI Turn
 		GlobalVars.game_state = GlobalVars.GameState.AI_TURN
 
-		# TODO: AI will need to:
-		# Read square_map and choose a move
-		var key = ai_player.select_move(square_map)   ### TODO
-
-		# Find the tile and pass the object to update_tile()
-		var coords: Vector3 = ai_player.get_box_coords(key)
-		update_tile(world_gen.locate_tile(coords))   ### TODO
-
-		# Pass the key from square_map to process_turn()
-		process_turn(key)
+		# TODO: AI will need to read square_map and choose a move
+		# It will pass the tile object to process_turn
+		var tile = ai_player.select_move(square_map)   ### TODO
+		process_turn(tile)
 
 	else:
 		# Setting game state to Player Turn enables selection of squares by human player
@@ -87,29 +81,19 @@ func _on_tile_selected(tile):
 	# Plays audio
 	world_gen.audio_player.stream = load(current_player.sound_path)
 	world_gen.audio_player.play()
+	# Updates tile according to current player and checks for wins
+	process_turn(tile)
+
+
+func process_turn(tile):
 	# Updates tile according to current player
-	update_tile(tile)
-	# Converts positional data to string and passes to process_turn()
-	process_turn(tile.get_string_coords())
-
-
-# Takes in a tile object and updates it according to current player
-func update_tile(tile):
+	GlobalVars.game_state = GlobalVars.GameState.VALIDATION
 	tile.value = current_player.value
 	tile.selected = true
 	tile.update_color()
 
-
-# Records move on square_map, and checks for wins
-# If win_check.validate returns a value, the current player has won
-func process_turn(key):
-	GlobalVars.game_state = GlobalVars.GameState.VALIDATION
-	# Record move on square_map
-	var tile = square_map[key]
-	tile.value = current_player.value
-
-	# Check for winner
-	winner = win_check.validate(key)
+	# If win_check.validate returns a value, the current player has won
+	winner = win_check.validate(tile.key)
 	if winner:
 		GlobalVars.game_state = GlobalVars.GameState.ENDING
 		if current_turn == 0:
