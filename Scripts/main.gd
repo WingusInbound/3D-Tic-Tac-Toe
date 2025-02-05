@@ -12,7 +12,7 @@ var winner # String representing the winning row of tiles
 # On Ready
 @onready var win_check: Node3D = $WinCheck
 @onready var ui: UI = $UI_Canvas
-@onready var ai_player: Node = $Ai
+@onready var ai_player: Node = $AI
 @onready var world_gen: Node3D = $WorldGen
 
 
@@ -127,12 +127,28 @@ func process_turn(key):
 		game_manager()
 
 
+# Called after "game_win" animation is finished playing
+# Displays winning row, shrinks other squares and rotates the cube
+func show_win():
+	for key in square_map:
+		if key in winner:
+				continue
+		else:
+			var tile = square_map[key]
+			if tile.value == 0:
+				tile.anim_player.play("shrink")
+			else:
+				tile.anim_player.play("shrink_player")
+	world_gen.cube_anim_player.play("rotate")
+	world_gen.camera_anim_player.play("rotate")
+
+
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "play_game":
 		game_manager()
 	elif anim_name == "game_win":
 		GlobalVars.game_state = GlobalVars.GameState.DONE
-		world_gen.show_win()
+		show_win()
 		ui.game_over()
 
 

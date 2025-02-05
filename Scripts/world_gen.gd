@@ -119,28 +119,3 @@ func set_camera() -> void:
 	var camera_anim_game_win = camera_anim.duplicate()
 	var library: AnimationLibrary = camera_anim_player.get_animation_library("")
 	library.add_animation("game_win", camera_anim_game_win)
-
-
-# Takes in a vector3 and uses it to return the tile object at those coords
-func locate_tile(coords):
-	pass
-
-
-# Called after "game_win" animation is finished playing
-# Displays winning row, shrinks other squares and rotates the cube
-func show_win():
-	var cube_node: Node3D = get_node("/root/Main/Cube")
-	var layers = cube_node.get_children()
-	for i in layers:
-		var children = i.get_children()
-		for child in children:
-			var temp_key = child.get_string_coords()
-			if str(temp_key) in main.winner:
-				continue
-			else:
-				if child.value == 0:
-					child.anim_player.play("shrink")
-				else:
-					child.anim_player.play("shrink_player")
-	cube_anim_player.play("rotate")
-	camera_anim_player.play("rotate")
