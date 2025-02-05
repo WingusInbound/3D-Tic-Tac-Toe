@@ -53,7 +53,7 @@ func start_game():
 	players[0].color = GlobalVars.player_one_color
 	players[1].color = GlobalVars.player_two_color
 	world_gen.setup_game()
-	# Animation after setup triggers game_manager() via _on_animation_player_animation_finished
+	# Animation played after setup will trigger game_manager() via _on_animation_player_animation_finished
 
 
 # Initiates Primary Game Loop

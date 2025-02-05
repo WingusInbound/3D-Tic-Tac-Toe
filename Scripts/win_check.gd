@@ -168,7 +168,6 @@ func check_wins():
 			if tile_coord in ["diag1", "diag2", "card", "cross"]:
 				continue
 			var tile = main.square_map[tile_coord]
-			print(tile)
 			counter += tile.value
 		if abs(counter) == GlobalVars.cube_size:
 			return row
