@@ -1,11 +1,12 @@
 extends Node3D
 
 # Public
+var square_map = {} # Tracks the state of the game as a dict
+var weight_map: Dictionary = {} #
+var current_player: Player # Player object of current player, used to change per player settings
 
 # Private
-var square_map = {} # Tracks the state of the game as a dict
 var current_turn: int # 0 or 1, toggles current player
-var current_player: Player # Player object of current player, used to change per player settings
 var players: Array # Used to contain and refer to Player objects
 var winner # String representing the winning row of tiles
 
@@ -65,7 +66,7 @@ func game_manager():
 
 		# TODO: AI will need to read square_map and choose a move
 		# It will pass the tile object to process_turn
-		var tile = ai_player.select_move(square_map)   ### TODO
+		var tile = ai_player.select_move(square_map, weight_map)   ### TODO
 		process_turn(tile)
 
 	else:

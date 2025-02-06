@@ -2,18 +2,31 @@
 WinCheck
 Call validate(selected) where selected is a 3 digit coordinate as a string (eg 231)
 Returns a list of such strings if main.square_map shows those 4 boxes have values that sum to abs(cube_size)
+weight_check() is the same but it doesn't check wins, and returns the full potential_wins list
 """
 
 extends Node3D
 
-@onready var main = get_parent()
+const WEIGHT_MOD = 5 # How much a selected tile raises the weight of its neighbors
 
 var possible_wins: Array = []
 
+@onready var main = get_parent()
+
+
 func validate(selected):
+	main.weight_map.erase(selected)
+	possible_wins = []
 	get_potential_wins(selected)
 	get_cross_diagonal_wins(selected)
 	return check_wins()
+
+
+func weight_check(selected):
+	possible_wins = []
+	get_potential_wins(selected)
+	get_cross_diagonal_wins(selected)
+	return possible_wins
 
 
 # Creates a list of all possible winstates the key could be in
@@ -79,10 +92,8 @@ func get_potential_wins(key):
 			if diag_type != 0:
 				diag_list.append(diagonal_assembly)
 		# Add rows to list of possible wins
-		card_list.append("card")
 		possible_wins.append(card_list)
 		if len(diag_list) > 0:
-			diag_list.append("diag" + str(diag_type))
 			possible_wins.append(diag_list)
 
 
@@ -132,6 +143,10 @@ func get_cross_diagonal_wins(key):
 			diff = key[cord_pos]
 			diff_pos = cord_pos
 
+	# If all 3 positions different, skip calculations
+	if key.count(shared) < 2:
+		return
+
 	# If all numbers the same (no diff), cross is 000, 111, 222, 333
 	if diff == "":
 		for i in range(0, GlobalVars.cube_size):
@@ -154,7 +169,6 @@ func get_cross_diagonal_wins(key):
 
 	# If cross list not empty, add to possible wins
 	if len(cross_list) > 0:
-		cross_list.append("cross")
 		possible_wins.append(cross_list)
 
 
@@ -165,9 +179,11 @@ func check_wins():
 
 		# Checks if there are 4 selected boxes in that row
 		for tile_coord in row:
-			if tile_coord in ["diag1", "diag2", "card", "cross"]:
-				continue
 			var tile = main.square_map[tile_coord]
 			counter += tile.value
+			var map = main.weight_map
+			if main.weight_map.has(tile_coord):
+				main.weight_map[tile_coord] += WEIGHT_MOD
+
 		if abs(counter) == GlobalVars.cube_size:
 			return row

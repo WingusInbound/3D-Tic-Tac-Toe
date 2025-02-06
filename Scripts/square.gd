@@ -3,7 +3,6 @@ extends Node3D
 # Public
 var value: int # -1 = Player Two selected, 1 = Player One selected
 var key: String # Positional coordinate as a string ie 230
-var weight: int # How highly the AI should prioritize this tile
 var selected: bool = false
 
 # Private
@@ -26,13 +25,7 @@ func configure(x,y,z) -> void:
 	self.global_position = Vector3(x-(GlobalVars.cube_size / 2),y,z-(GlobalVars.cube_size / 2))
 	self.key = str(x) + str(y) + str(z)
 	main.square_map.get_or_add(self.key,self)
-	calculate_starting_weight()
-
-
-func calculate_starting_weight():
-	# Uses key to determine if tile is on a corner, edge, flat, etc
-	# Applies a value to weight
-	pass
+	main.weight_map.get_or_add(self.key,1)
 
 
 func _on_area_3d_mouse_entered() -> void:

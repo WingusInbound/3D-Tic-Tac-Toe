@@ -13,6 +13,21 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func select_move(map) -> Object:
-	# Needs to pick a tile based on weight and return the tile object
-	return
+func select_move(map, weights) -> Object:
+	# Make helper vars
+	var highest_list: Array = []
+	var highest_val: int = 0
+
+	# Iterate through weight_map, making a list of the highest values
+	for square in weights:
+		if weights[square] == highest_val:
+			highest_list.append(square)
+		if weights[square] > highest_val:
+			highest_val = weights[square]
+			highest_list.clear()
+			highest_list.append(square)
+
+	# Pick a random key from among highest weights
+	var list_len = len(highest_list)
+	var move_key = highest_list[randi_range(0, list_len - 1)]
+	return map[move_key]

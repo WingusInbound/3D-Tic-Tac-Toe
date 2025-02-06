@@ -19,16 +19,18 @@ var half_size: int
 @onready var camera: Camera3D = $Camera3D
 @onready var main: Node3D = $".."
 @onready var audio_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var win_check: Node3D = $"../WinCheck"
 
 
-func _ready():
+func _ready() -> void:
 	spotlight.position = Vector3(0,50,0)
 
 
 # Called by main.start_game(), builds cube and playes starting animation
-func setup_game():
+func setup_game() -> void:
 	set_cube()
 	set_camera()
+	set_weights()
 	cube_anim_player.play("play_game")
 	camera_anim_player.play("play_game")
 
@@ -117,3 +119,32 @@ func set_camera() -> void:
 	var camera_anim_game_win = camera_anim.duplicate()
 	var library: AnimationLibrary = camera_anim_player.get_animation_library("")
 	library.add_animation("game_win", camera_anim_game_win)
+
+
+func set_weights() -> void:
+	# far_point is the highest numerical position on the cube
+	var far_point: String
+	for i in range(3):
+		far_point += str(cube_size - 1)
+
+	# corners is a list of coords of the 8 corners of the cube
+	var corners: Array = ["000", far_point]
+	for i in range(3):
+		var zero_assembly = "000"
+		var far_assembly = far_point
+		for j in range(3):
+			if j == i:
+				zero_assembly[j] = str(cube_size - 1)
+				far_assembly[j] = "0"
+		corners.append(zero_assembly)
+		corners.append(far_assembly)
+
+	# Runs all the corners through a modified WinCheck to get a list of all vertices
+	var weight_list: Array = []
+	for corner in corners:
+		weight_list.append_array(win_check.weight_check(corner))
+
+	for row in weight_list:
+		for coord in row:
+			pass
+			main.weight_map[coord] = clampi(main.weight_map[coord] + 1, 0, 5)
