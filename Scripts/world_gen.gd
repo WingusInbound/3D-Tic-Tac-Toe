@@ -26,7 +26,7 @@ func _ready() -> void:
 	spotlight.position = Vector3(0,50,0)
 
 
-# Called by main.start_game(), builds cube and playes starting animation
+# Called by main.start_game(), builds cube and plays starting animation
 func setup_game() -> void:
 	set_cube()
 	set_camera()
