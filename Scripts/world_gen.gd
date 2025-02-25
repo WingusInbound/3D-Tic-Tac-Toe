@@ -201,6 +201,7 @@ func set_row_tracker() -> void:
 		main.win_tracker[row_id].score = 0
 		main.win_tracker[row_id].tiles = set_row_tiles(coord_list)
 
+# Finds the tile objects and makes a dict of the tiles in the row
 func set_row_tiles(coord_list) -> Dictionary:
 	var dict_assembly: Dictionary = {}
 	for key in coord_list:
