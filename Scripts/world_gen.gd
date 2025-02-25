@@ -26,11 +26,13 @@ func _ready() -> void:
 	spotlight.position = Vector3(0,50,0)
 
 
-# Called by main.start_game(), builds cube and playes starting animation
+# Called by main.start_game(), builds cube and plays starting animation
 func setup_game() -> void:
 	set_cube()
 	set_camera()
 	set_weights()
+	if GlobalVars.ai_toggle:
+		set_row_tracker()
 	cube_anim_player.play("play_game")
 	camera_anim_player.play("play_game")
 
@@ -148,3 +150,75 @@ func set_weights() -> void:
 		for coord in row:
 			pass
 			main.weight_map[coord] = clampi(main.weight_map[coord] + 1, 0, 5)
+
+func set_row_tracker() -> void:
+	var string_assembly: String
+	var cube_shell: Array = []
+	var list_assembly: Array
+	var win_list: Array
+	var digit_toggle: int
+
+	# Find all positions on shell of cube
+	for dimension in range(3):
+		# i and j refer to x and y on relative plane
+		for i in range(cube_size):
+			for j in range(cube_size):
+
+				# Reset helper vars
+				digit_toggle = 0
+				string_assembly = ""
+
+				# Build coordinate string
+				for cord_digit in range(3):
+					if cord_digit == dimension:
+						string_assembly += "0"
+					elif digit_toggle == 0:
+						digit_toggle = 1
+						string_assembly += str(i)
+					elif digit_toggle == 1:
+						string_assembly += str(j)
+
+				# Add to shell list if not already present
+				if not cube_shell.has(string_assembly):
+					cube_shell.append(string_assembly)
+
+	# Using shell list, generate a list of all rows using win_check
+	# TODO: Replace weight_check name
+	for coord in cube_shell:
+		list_assembly.append_array(win_check.weight_check(coord))
+	list_assembly.sort()
+	# Remove duplicates
+	for list in list_assembly:
+		if not list in win_list:
+			win_list.append(list)
+
+	# Create and configure a Row object for each potential win
+	for coord_list in win_list:
+		var row_id: String = get_row_id(coord_list)
+		main.row_tracker.get_or_add(row_id,Row.new())
+		main.row_tracker[row_id].key_list = coord_list
+		main.row_tracker[row_id].invalid = false
+		main.row_tracker[row_id].score = 0
+		main.row_tracker[row_id].tiles = set_row_tiles(coord_list)
+
+# Finds the tile objects and makes a dict of the tiles in the row
+func set_row_tiles(coord_list) -> Dictionary:
+	var dict_assembly: Dictionary = {}
+	for key in coord_list:
+		dict_assembly.get_or_add(key,main.square_map[key])
+	return dict_assembly
+
+# Converts list of coords to the ID# for that row
+func get_row_id(coord_list) -> String:
+	var id: String = ""
+	for i in len(coord_list):
+			id += coord_list[i]
+			if i > len(coord_list) - 1:
+				id += ","
+	return id
+
+class Row:
+	var invalid: bool
+	var score: int
+	var tiles: Dictionary
+	var key_list: Array
