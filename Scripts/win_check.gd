@@ -48,7 +48,7 @@ func get_potential_wins(key):
 	var diag_list: Array = []
 
 	# Marks which cord position represents the relative dimension
-	for dimension in range(0,3):
+	for dimension in range(3):
 		diag_toggle = 0
 		card_list = []
 		diag_list = []
@@ -56,12 +56,12 @@ func get_potential_wins(key):
 		diag_type = get_diag_type(dimension, key)
 
 		# Iterates through each possible postional value
-		for i in range(0,GlobalVars.cube_size):
+		for i in range(GlobalVars.cube_size):
 			cardinal_assembly = ""
 			diagonal_assembly = ""
 
 			# Represents each position on the cord
-			for cord_digit in range(0,3):
+			for cord_digit in range(3):
 
 				# If cord position relates to relative dimension
 				if cord_digit == dimension:

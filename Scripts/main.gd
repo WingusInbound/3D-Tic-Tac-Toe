@@ -4,6 +4,7 @@ extends Node3D
 var square_map = {} # Tracks the state of the game as a dict
 var weight_map: Dictionary = {} #
 var current_player: Player # Player object of current player, used to change per player settings
+var row_tracker: Dictionary
 
 # Private
 var current_turn: int # 0 or 1, toggles current player
