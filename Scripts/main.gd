@@ -1,7 +1,7 @@
 extends Node3D
 
 # Public
-var square_map = {} # Tracks the state of the game as a dict
+var square_map: Dictionary = {} # Tracks the state of the game as a dict
 var weight_map: Dictionary = {} #
 var current_player: Player # Player object of current player, used to change per player settings
 var row_tracker: Dictionary

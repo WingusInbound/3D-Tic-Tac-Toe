@@ -215,7 +215,6 @@ func get_row_id(coord_list) -> String:
 			id += coord_list[i]
 			if i < len(coord_list) - 1:
 				id += ","
-	print(id)
 	return id
 
 class Row:
