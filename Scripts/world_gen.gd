@@ -195,11 +195,11 @@ func set_row_tracker() -> void:
 	# Create and configure a Row object for each potential win
 	for coord_list in win_list:
 		var row_id: String = get_row_id(coord_list)
-		main.win_tracker.get_or_add(row_id,Row.new())
-		main.win_tracker[row_id].key_list = coord_list
-		main.win_tracker[row_id].invalid = false
-		main.win_tracker[row_id].score = 0
-		main.win_tracker[row_id].tiles = set_row_tiles(coord_list)
+		main.row_tracker.get_or_add(row_id,Row.new())
+		main.row_tracker[row_id].key_list = coord_list
+		main.row_tracker[row_id].invalid = false
+		main.row_tracker[row_id].score = 0
+		main.row_tracker[row_id].tiles = set_row_tiles(coord_list)
 
 # Finds the tile objects and makes a dict of the tiles in the row
 func set_row_tiles(coord_list) -> Dictionary:
