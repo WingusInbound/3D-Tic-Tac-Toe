@@ -213,7 +213,7 @@ func get_row_id(coord_list) -> String:
 	var id: String = ""
 	for i in len(coord_list):
 			id += coord_list[i]
-			if i > len(coord_list) - 1:
+			if i < len(coord_list) - 1:
 				id += ","
 	return id
 

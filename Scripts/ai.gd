@@ -31,3 +31,12 @@ func select_move(map, weights) -> Object:
 	var list_len = len(highest_list)
 	var move_key = highest_list[randi_range(0, list_len - 1)]
 	return map[move_key]
+
+func get_moves(map: Dictionary) -> Dictionary:
+	var map_copy = map.duplicate()
+	for tile in map_copy:
+		if tile.value != 0:
+			map_copy.erase(tile.key)
+	return map_copy
+
+	
