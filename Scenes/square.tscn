@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=4 uid="uid://phuekkypyokb"]
 
-[ext_resource type="Script" path="res://Scripts/square.gd" id="1_a52pp"]
+[ext_resource type="Script" uid="uid://bn7ovobdvmov3" path="res://Scripts/square.gd" id="1_a52pp"]
 [ext_resource type="BoxMesh" uid="uid://b4i2cd8xiila3" path="res://Assets/square.tres" id="2_fq6ps"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqwyf"]
@@ -71,9 +71,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_f8cft"]
 _data = {
-"RESET": SubResource("Animation_3w0hv"),
-"shrink": SubResource("Animation_vpxc6"),
-"shrink_player": SubResource("Animation_a8emx")
+&"RESET": SubResource("Animation_3w0hv"),
+&"shrink": SubResource("Animation_vpxc6"),
+&"shrink_player": SubResource("Animation_a8emx")
 }
 
 [node name="Square" type="Node3D"]
