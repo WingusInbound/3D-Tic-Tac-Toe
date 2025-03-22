@@ -1,11 +1,11 @@
 [gd_scene load_steps=18 format=3 uid="uid://dd15sdagi3yeb"]
 
-[ext_resource type="Script" path="res://Scripts/main.gd" id="1_nxcne"]
+[ext_resource type="Script" uid="uid://dv0euj0yptk8j" path="res://Scripts/main.gd" id="1_nxcne"]
 [ext_resource type="PackedScene" uid="uid://2qa7nlw51tan" path="res://Scenes/ui.tscn" id="2_v4d1a"]
 [ext_resource type="PackedScene" uid="uid://phuekkypyokb" path="res://Scenes/square.tscn" id="3_edg6o"]
-[ext_resource type="Script" path="res://Scripts/win_check.gd" id="4_vb1hq"]
-[ext_resource type="Script" path="res://Scripts/ai.gd" id="5_dmki4"]
-[ext_resource type="Script" path="res://Scripts/world_gen.gd" id="6_ved8l"]
+[ext_resource type="Script" uid="uid://dkvm3l38fy1bb" path="res://Scripts/win_check.gd" id="4_vb1hq"]
+[ext_resource type="Script" uid="uid://b88mxblyn7m8s" path="res://Scripts/ai.gd" id="5_dmki4"]
+[ext_resource type="Script" uid="uid://cakod6vio1slq" path="res://Scripts/world_gen.gd" id="6_ved8l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oef75"]
 albedo_color = Color(0, 0, 0, 1)
@@ -116,9 +116,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r8lxa"]
 _data = {
-"RESET": SubResource("Animation_am3os"),
-"play_game": SubResource("Animation_ydefg"),
-"rotate": SubResource("Animation_5nuce")
+&"RESET": SubResource("Animation_am3os"),
+&"play_game": SubResource("Animation_ydefg"),
+&"rotate": SubResource("Animation_5nuce")
 }
 
 [sub_resource type="Animation" id="Animation_mbplr"]
@@ -132,8 +132,8 @@ loop_mode = 1
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4pypu"]
 _data = {
-"play_game": SubResource("Animation_mbplr"),
-"rotate": SubResource("Animation_7cg1e")
+&"play_game": SubResource("Animation_mbplr"),
+&"rotate": SubResource("Animation_7cg1e")
 }
 
 [node name="Main" type="Node3D"]
@@ -178,13 +178,13 @@ fov = 100.0
 [node name="CameraAnimationPlayer" type="AnimationPlayer" parent="WorldGen"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_r8lxa")
+&"": SubResource("AnimationLibrary_r8lxa")
 }
 
 [node name="CubeAnimationPlayer" type="AnimationPlayer" parent="WorldGen"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_4pypu")
+&"": SubResource("AnimationLibrary_4pypu")
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="WorldGen"]
